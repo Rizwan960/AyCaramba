@@ -1,0 +1,238 @@
+import 'dart:io';
+
+import 'package:animate_do/animate_do.dart';
+import 'package:ay_caramba/Utils/Colors/app_colors.dart';
+import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
+import 'package:ay_caramba/Views/Auth/forget_password_page.dart';
+import 'package:ay_caramba/Views/Auth/signup_page.dart';
+import 'package:ay_caramba/Views/BottomNavBar/app_bottom_nav_bar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final key = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final emailFocusNode = FocusNode();
+  final passwordFocusNode = FocusNode();
+  bool hidePassword = true;
+
+  @override
+  void dispose() {
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
+      backgroundColor: AppColors.callToActionColor,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 100),
+            Center(child: SvgPicture.asset("Assets/Svg/logo.svg", height: 140)),
+            const SizedBox(height: 60),
+            Container(
+              height: size.height * 0.63,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(56),
+                    topRight: Radius.circular(56)),
+                color: AppColors.backgroundColor,
+              ),
+              child: Form(
+                key: key,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 40),
+                      const Text(
+                        "Login",
+                        style: TextStyle(
+                          color: AppColors.yellowTextColor,
+                          fontSize: 35,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      FadeInLeft(
+                        child: TextFormField(
+                          cursorColor: Colors.black,
+                          onTapOutside: (event) =>
+                              FocusScope.of(context).unfocus(),
+                          focusNode: emailFocusNode,
+                          controller: emailController,
+                          textInputAction: TextInputAction.next,
+                          onEditingComplete: () {
+                            FocusScope.of(context)
+                                .requestFocus(passwordFocusNode);
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          textCapitalization: TextCapitalization.words,
+                          decoration: const InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                borderSide:
+                                    BorderSide(color: AppColors.blackColor)),
+                            labelText: "Email",
+                            labelStyle: TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              borderSide:
+                                  BorderSide(color: AppColors.backgroundColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      FadeInLeft(
+                        child: TextFormField(
+                          cursorColor: Colors.black,
+                          obscureText: hidePassword,
+                          onTapOutside: (event) =>
+                              FocusScope.of(context).unfocus(),
+                          focusNode: passwordFocusNode,
+                          controller: passwordController,
+                          textInputAction: TextInputAction.done,
+                          onEditingComplete: () {},
+                          keyboardType: TextInputType.emailAddress,
+                          textCapitalization: TextCapitalization.words,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  hidePassword = !hidePassword;
+                                });
+                              },
+                              icon: hidePassword
+                                  ? const Icon(Icons.visibility_off)
+                                  : const Icon(Icons.visibility),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                                borderSide:
+                                    BorderSide(color: AppColors.blackColor)),
+                            labelText: "Password",
+                            labelStyle: const TextStyle(color: Colors.black),
+                            border: const OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                              borderSide:
+                                  BorderSide(color: AppColors.backgroundColor),
+                            ),
+                          ),
+                        ),
+                      ),
+                      FadeInRight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                if (Platform.isAndroid) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgetPasswordPage(),
+                                  ));
+                                } else {
+                                  Navigator.of(context).push(CupertinoPageRoute(
+                                    builder: (context) =>
+                                        const ForgetPasswordPage(),
+                                  ));
+                                }
+                              },
+                              child: const Text(
+                                "Forget Password?",
+                                style: AppFonts.normalGrey15,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      FadeInUp(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.callToActionColor,
+                              minimumSize: const Size.fromHeight(55)),
+                          onPressed: () {
+                            if (Platform.isAndroid) {
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (context) => const AppBottomNavBar(),
+                              ));
+                            } else {
+                              Navigator.of(context)
+                                  .pushReplacement(CupertinoPageRoute(
+                                builder: (context) => const AppBottomNavBar(),
+                              ));
+                            }
+                          },
+                          child: const Text(
+                            "Continue",
+                            style: AppFonts.normalWhite18,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      FadeInUp(
+                        child: Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: "Don't have an account ? ",
+                              style: AppFonts.normalGrey12,
+                              children: [
+                                TextSpan(
+                                  text: "Sign Up for free",
+                                  style: AppFonts.boldBlack12,
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      if (Platform.isAndroid) {
+                                        Navigator.of(context)
+                                            .pushReplacement(MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignUpPage(),
+                                        ));
+                                      } else {
+                                        Navigator.of(context)
+                                            .pushReplacement(CupertinoPageRoute(
+                                          builder: (context) =>
+                                              const SignUpPage(),
+                                        ));
+                                      }
+                                    },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
