@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           controller: passwordController,
                           textInputAction: TextInputAction.done,
                           onEditingComplete: () {},
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.visiblePassword,
                           textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
                             suffixIcon: IconButton(

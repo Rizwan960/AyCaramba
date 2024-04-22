@@ -41,6 +41,8 @@ class _SignUpPageState extends State<SignUpPage> {
   void dispose() {
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
+    nameFocusNode.dispose();
+    confirmPasswordFocusNode.dispose();
     super.dispose();
   }
 
@@ -285,7 +287,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: passwordController,
                             textInputAction: TextInputAction.done,
                             onEditingComplete: () {},
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.visiblePassword,
                             textCapitalization: TextCapitalization.words,
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
@@ -328,7 +330,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             controller: confirmPasswordController,
                             textInputAction: TextInputAction.done,
                             onEditingComplete: () {},
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.visiblePassword,
                             textCapitalization: TextCapitalization.words,
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
