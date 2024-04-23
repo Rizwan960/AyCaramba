@@ -52,7 +52,7 @@ class _AppBottomNavBarState extends State<AppBottomNavBar> {
       elevation: 0,
       radius: 20,
       width: MediaQuery.of(context).size.width * 0.9,
-      height: 65,
+      height: 60,
     );
   }
 }
