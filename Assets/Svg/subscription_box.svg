@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="425" viewBox="0 0 390 425">
+  <g id="Group_411" data-name="Group 411" transform="translate(-20 -268)">
+    <g id="Group_410" data-name="Group 410">
+      <rect id="Rectangle_1330" data-name="Rectangle 1330" width="390" height="425" rx="16" transform="translate(20 268)" fill="#e58f6b" opacity="0.353"/>
+      <text id="_" data-name="$" transform="translate(65 468.5)" fill="#2c2c2c" font-size="32" font-family="Helvetica"><tspan x="0" y="0">$</tspan></text>
+      <text id="_01.00" data-name="01.00" transform="translate(98 469.5)" fill="#2c2c2c" font-size="63" font-family="Helvetica"><tspan x="0" y="0">0.99</tspan></text>
+      <text id="Per_Month" data-name="Per Month" transform="translate(271 466.5)" font-size="19" font-family="Helvetica" letter-spacing="-0.011em"><tspan x="0" y="0">Per Month</tspan></text>
+      <line id="Line_17" data-name="Line 17" x2="300" transform="translate(65.5 499.5)" fill="none" stroke="#f4ede6" stroke-linecap="round" stroke-width="1"/>
+      <!-- Subscription Paywall Text -->
+      <text id="Unlock_Exclusive_Content" data-name="Unlock Exclusive Content!" transform="translate(62 540)" fill="#202020" font-size="20" font-family="Helvetica" font-weight="bold" letter-spacing="-0.011em"><tspan x="0" y="0">Unlock Exclusive Content!</tspan></text>
+      <text id="Access_Premium_Features" data-name="Access Premium Features" transform="translate(62 578)" fill="#202020" font-size="16" font-family="Helvetica" letter-spacing="-0.011em"><tspan x="0" y="0">Access Premium Features</tspan></text>
+      <text id="Enjoy_Ad-Free_Experience" data-name="Enjoy Ad-Free Experience" transform="translate(62 616)" fill="#202020" font-size="16" font-family="Helvetica" letter-spacing="-0.011em"><tspan x="0" y="0">Enjoy Ad-Free Experience</tspan></text>
+      <text id="Join_Our_Community" data-name="Join Our Community" transform="translate(62 654)" fill="#202020" font-size="16" font-family="Helvetica" letter-spacing="-0.011em"><tspan x="0" y="0">Join Our Community</tspan></text>
+    </g>
+  </g>
+</svg>

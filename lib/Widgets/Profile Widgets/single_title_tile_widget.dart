@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class SingleTitleTileWidget extends StatelessWidget {
   final String title;
-  const SingleTitleTileWidget({super.key, required this.title});
+  final Function() fun;
+  const SingleTitleTileWidget(
+      {super.key, required this.title, required this.fun});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +18,7 @@ class SingleTitleTileWidget extends StatelessWidget {
         color: AppColors.whiteColor,
       ),
       child: ListTile(
+        onTap: fun,
         title: Text(
           title,
           style: AppFonts.normalBlack15,

@@ -1,12 +1,16 @@
 import 'dart:io';
 
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
+import 'package:ay_caramba/Views/Auth/login_page.dart';
 import 'package:ay_caramba/Views/Pages/Profile%20Pages/profile_seetings_page.dart';
+import 'package:ay_caramba/Views/Pages/Profile%20Pages/referral_page.dart';
+import 'package:ay_caramba/Views/Pages/Profile%20Pages/subscription_paywall_page.dart';
 import 'package:ay_caramba/Widgets/Profile%20Widgets/email_name_tile_widget.dart';
 import 'package:ay_caramba/Widgets/Profile%20Widgets/notification_togle_tile_widget.dart';
 import 'package:ay_caramba/Widgets/Profile%20Widgets/single_title_tile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -44,7 +48,20 @@ class ProfilePage extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 10),
-              const SingleTitleTileWidget(title: "Referral "),
+              SingleTitleTileWidget(
+                title: "Referral ",
+                fun: () {
+                  if (Platform.isAndroid) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ReferralPage(),
+                    ));
+                  } else {
+                    Navigator.of(context).push(CupertinoPageRoute(
+                      builder: (context) => const ReferralPage(),
+                    ));
+                  }
+                },
+              ),
               const SizedBox(height: 20),
               const Text(
                 "General",
@@ -54,13 +71,63 @@ class ProfilePage extends StatelessWidget {
               const SizedBox(height: 10),
               const NotificationTogleTileWidget(title: "Mute Notifications"),
               const SizedBox(height: 10),
-              const SingleTitleTileWidget(title: "Get Premium Now"),
+              SingleTitleTileWidget(
+                title: "Get Premium Now",
+                fun: () {
+                  if (Platform.isAndroid) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SubscriptionPayWallPage(
+                        showAppBar: true,
+                      ),
+                    ));
+                  } else {
+                    Navigator.of(context).push(CupertinoPageRoute(
+                      builder: (context) => const SubscriptionPayWallPage(
+                        showAppBar: true,
+                      ),
+                    ));
+                  }
+                },
+              ),
               const SizedBox(height: 10),
-              const SingleTitleTileWidget(title: "Privacy Policy "),
+              SingleTitleTileWidget(
+                title: "Privacy Policy ",
+                fun: () async {
+                  final Uri url = Uri.parse("https://www.google.com");
+                  if (!await launchUrl(url)) {
+                    throw Exception('Could not launch $url');
+                  }
+                },
+              ),
               const SizedBox(height: 10),
-              const SingleTitleTileWidget(title: "Terms & Conditions"),
+              SingleTitleTileWidget(
+                title: "Terms & Conditions",
+                fun: () async {
+                  final Uri url = Uri.parse("https://www.google.com");
+                  if (!await launchUrl(url)) {
+                    throw Exception('Could not launch $url');
+                  }
+                },
+              ),
               const SizedBox(height: 10),
-              const SingleTitleTileWidget(title: "Logout"),
+              SingleTitleTileWidget(
+                title: "Logout",
+                fun: () {
+                  if (Platform.isAndroid) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                        (route) => false);
+                  } else {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                        (route) => false);
+                  }
+                },
+              ),
             ],
           ),
         ),

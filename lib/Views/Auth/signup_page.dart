@@ -178,7 +178,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 5),
                       Visibility(
                         visible: _index == 0 ? true : false,
                         child: FadeInLeft(
@@ -274,7 +274,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       Visibility(
                         visible: _index != 0 ? true : false,
                         child: FadeInRight(
@@ -317,7 +317,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       Visibility(
                         visible: _index != 0 ? true : false,
                         child: FadeInRight(

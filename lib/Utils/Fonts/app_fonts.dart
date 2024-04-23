@@ -37,6 +37,8 @@ class AppFonts {
       fontSize: 21, color: AppColors.blackColor, fontFamily: 'Poppins');
   static const TextStyle normalBlack25 = TextStyle(
       fontSize: 25, color: AppColors.blackColor, fontFamily: 'Poppins');
+  static const TextStyle normalBlack30 = TextStyle(
+      fontSize: 30, color: AppColors.blackColor, fontFamily: 'Poppins');
 
   static const TextStyle boldWhite12 = TextStyle(
       fontSize: 12,
