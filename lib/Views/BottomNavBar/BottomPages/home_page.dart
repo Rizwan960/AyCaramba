@@ -33,13 +33,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const Positioned(
-                  top: 90,
+                  top: 100,
                   left: 20,
                   child: SizedBox(
                     width: 200,
                     child: Text(
                       "Let's Track your street cleaning schedule",
-                      style: AppFonts.normalWhite21,
+                      style: AppFonts.normalWhite15,
                     ),
                   ),
                 ),
@@ -60,9 +60,9 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 40),
                   Container(
-                    height: 120,
+                    height: 110,
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color.fromARGB(255, 174, 148, 120),
@@ -75,32 +75,33 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 10),
+                              SizedBox(height: 15),
                               Text(
                                 "Sweep Schedule",
                                 style: TextStyle(
                                     color: AppColors.yellowTextColor,
-                                    fontSize: 25),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
                               ),
                               SizedBox(height: 5),
                               SizedBox(
                                 width: 120,
                                 child: Text(
                                   "Sweeper's near, move your gear!",
-                                  style: AppFonts.normalGrey15,
+                                  style: AppFonts.normalGrey12,
                                 ),
                               ),
                             ],
                           ),
                         ),
                         SvgPicture.asset("Assets/Svg/sweep.svg",
-                            height: MediaQuery.of(context).size.width * 0.18)
+                            height: MediaQuery.of(context).size.width * 0.16)
                       ],
                     ),
                   ),
                   const SizedBox(height: 10),
                   Container(
-                    height: 120,
+                    height: 110,
                     decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color.fromARGB(255, 174, 148, 120),
@@ -113,19 +114,20 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 10),
+                              SizedBox(height: 15),
                               Text(
                                 "History",
                                 style: TextStyle(
                                     color: AppColors.yellowTextColor,
-                                    fontSize: 25),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
                               ),
                               SizedBox(height: 5),
                               SizedBox(
                                 width: 150,
                                 child: Text(
                                   "Track your wins: tickets dodged, savings begin!",
-                                  style: AppFonts.normalGrey15,
+                                  style: AppFonts.normalGrey12,
                                 ),
                               ),
                             ],
@@ -143,17 +145,16 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 5),
                   SizedBox(
-                    height: 150,
+                    height: 180,
                     child: ListView.builder(
                       itemCount: 2,
                       itemBuilder: (context, index) {
                         return Column(
                           children: [
                             Container(
-                              height: 60,
                               decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)),
+                                  borderRadius: BorderRadius.circular(15)),
                               child: ListTile(
                                 title: Text(
                                   "Car $index",

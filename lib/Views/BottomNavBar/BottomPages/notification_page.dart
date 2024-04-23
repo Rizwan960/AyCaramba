@@ -41,7 +41,7 @@ class NotificationPage extends StatelessWidget {
                           size: 15,
                         ),
                         Text(
-                          "Lorem ipsum dolor sit amet, consetetur sadipscing elitr",
+                          "Lorem ipsum dolor sit amet",
                           style:
                               TextStyle(color: Color(0XFF455A64), fontSize: 13),
                         ),
