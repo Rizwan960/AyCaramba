@@ -1,12 +1,17 @@
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
 import 'package:ay_caramba/Views/Splash/splash_screen.dart';
+import 'package:ay_caramba/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/util/utils.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   WidgetsFlutterBinding.ensureInitialized();
   final id = await cGetDeviceId();
   CommonData.deviceId = id;

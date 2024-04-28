@@ -1,4 +1,4 @@
-package com.example.ay_caramba
+package com.aycaramba.app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -46,6 +46,9 @@ dependencies:
   dio: ^5.4.3+1
   fluttertoast: ^8.2.5
   flutter_custom_utils: ^0.4.23
+  table_calendar: ^3.1.1
+  firebase_core: ^2.30.1
+  firebase_messaging: ^14.9.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -55,6 +58,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  # change_app_package_name: ^1.1.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

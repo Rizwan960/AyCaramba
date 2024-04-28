@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "358908167465",
+    "project_id": "ay-caramba-2d799",
+    "storage_bucket": "ay-caramba-2d799.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358908167465:android:5d23741209da36fa45a338",
+        "android_client_info": {
+          "package_name": "com.aycaramba.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOwExAc5Kd5E1oLiosGi3JifkOL03341U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

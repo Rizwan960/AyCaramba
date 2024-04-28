@@ -115,8 +115,8 @@ class _ProfileSeetingsPageState extends State<ProfileSeetingsPage> {
     );
   }
 
-  void showDialogForUpdate(String title) {
-    showDialog(
+  Future<void> showDialogForUpdate(String title) {
+    return showDialog(
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
@@ -128,57 +128,66 @@ class _ProfileSeetingsPageState extends State<ProfileSeetingsPage> {
             )),
             content: Form(
               key: key,
-              child: TextFormField(
-                cursorColor: Colors.black,
-                controller: updateController,
-                onEditingComplete: () {
-                  FocusScope.of(context).unfocus();
-                },
-                validator: title == "Name"
-                    ? (value) {
-                        if (value!.isEmpty) {
-                          return "field should not be empty";
-                        }
-                        if (value.length < 3) {
-                          return "should be greater then 3 characters";
-                        }
-                        return null;
-                      }
-                    : (value) {
-                        if (value!.isEmpty) {
-                          return "field should not be empty";
-                        }
-                        if (!value.isEmail()) {
-                          return "invalid email";
-                        }
-                        return null;
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Material(
+                    color: Colors.transparent,
+                    child: TextFormField(
+                      cursorColor: Colors.black,
+                      controller: updateController,
+                      onEditingComplete: () {
+                        FocusScope.of(context).unfocus();
                       },
-                decoration: const InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      borderSide: BorderSide(color: AppColors.blackColor)),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    borderSide: BorderSide(color: AppColors.backgroundColor),
+                      validator: title == "Name"
+                          ? (value) {
+                              if (value!.isEmpty) {
+                                return "field should not be empty";
+                              }
+                              if (value.length < 3) {
+                                return "should be greater then 3 characters";
+                              }
+                              return null;
+                            }
+                          : (value) {
+                              if (value!.isEmpty) {
+                                return "field should not be empty";
+                              }
+                              if (!value.isEmail()) {
+                                return "invalid email";
+                              }
+                              return null;
+                            },
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            borderSide:
+                                BorderSide(color: AppColors.blackColor)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderSide:
+                              BorderSide(color: AppColors.backgroundColor),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.callToActionColor,
+                        minimumSize: const Size.fromHeight(45)),
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      logout(title.toLowerCase(), updateController.text);
+                    },
+                    child: const Text(
+                      "Update",
+                      style: AppFonts.normalWhite18,
+                    ),
+                  ),
+                ],
               ),
             ),
-            actions: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.callToActionColor,
-                    minimumSize: const Size.fromHeight(45)),
-                onPressed: () {
-                  FocusScope.of(context).unfocus();
-                  logout(title.toLowerCase(), updateController.text);
-                },
-                child: const Text(
-                  "Update",
-                  style: AppFonts.normalWhite18,
-                ),
-              ),
-            ],
           );
         },
       ),

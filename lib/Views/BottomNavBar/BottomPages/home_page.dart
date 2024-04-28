@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Common/shared_pref.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
+import 'package:ay_caramba/Views/Pages/Home%20Pages/history_page.dart';
+import 'package:ay_caramba/Views/Pages/Home%20Pages/sweep_schedule_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -85,81 +89,117 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 40),
-                  Container(
-                    height: 110,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color.fromARGB(255, 174, 148, 120),
-                        ),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 15),
-                              Text(
-                                "Sweep Schedule",
-                                style: TextStyle(
-                                    color: AppColors.yellowTextColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              SizedBox(height: 5),
-                              SizedBox(
-                                width: 120,
-                                child: Text(
-                                  "Sweeper's near, move your gear!",
-                                  style: AppFonts.normalGrey12,
-                                ),
-                              ),
-                            ],
+                  GestureDetector(
+                    onTap: () {
+                      if (Platform.isAndroid) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SweepSchedulePage(),
+                        ));
+                      } else {
+                        Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (context) => const SweepSchedulePage(),
+                        ));
+                      }
+                    },
+                    child: Container(
+                      height: 110,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 174, 148, 120),
                           ),
-                        ),
-                        SvgPicture.asset("Assets/Svg/sweep.svg",
-                            height: MediaQuery.of(context).size.width * 0.16)
-                      ],
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 15),
+                                Text(
+                                  "Sweep Schedule",
+                                  style: TextStyle(
+                                      color: AppColors.yellowTextColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                                SizedBox(height: 5),
+                                SizedBox(
+                                  width: 120,
+                                  child: Text(
+                                    "Sweeper's near, move your gear!",
+                                    style: AppFonts.normalGrey12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: SvgPicture.asset("Assets/Svg/sweep.svg",
+                                height:
+                                    MediaQuery.of(context).size.width * 0.16),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Container(
-                    height: 110,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: const Color.fromARGB(255, 174, 148, 120),
-                        ),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 15),
-                              Text(
-                                "History",
-                                style: TextStyle(
-                                    color: AppColors.yellowTextColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20),
-                              ),
-                              SizedBox(height: 5),
-                              SizedBox(
-                                width: 150,
-                                child: Text(
-                                  "Track your wins: tickets dodged, savings begin!",
-                                  style: AppFonts.normalGrey12,
-                                ),
-                              ),
-                            ],
+                  GestureDetector(
+                    onTap: () {
+                      if (Platform.isAndroid) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const HistoryPage(),
+                        ));
+                      } else {
+                        Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (context) => const HistoryPage(),
+                        ));
+                      }
+                    },
+                    child: Container(
+                      height: 110,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 174, 148, 120),
                           ),
-                        ),
-                        SvgPicture.asset("Assets/Svg/history.svg",
-                            height: MediaQuery.of(context).size.width * 0.22)
-                      ],
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 15),
+                                Text(
+                                  "History",
+                                  style: TextStyle(
+                                      color: AppColors.yellowTextColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                                SizedBox(height: 5),
+                                SizedBox(
+                                  width: 150,
+                                  child: Text(
+                                    "Track your wins: tickets dodged, savings begin!",
+                                    style: AppFonts.normalGrey12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: SvgPicture.asset("Assets/Svg/history.svg",
+                                height:
+                                    MediaQuery.of(context).size.width * 0.22),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
