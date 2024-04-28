@@ -71,15 +71,15 @@ class _SignUpPageState extends State<SignUpPage> {
         'phone': phoneController.text,
         'city': cityValue,
         'state': stateValue,
-        // 'country': countryValue,
+        'country': countryValue,
         'password': passwordController.text,
         'password_confirmation': confirmPasswordController.text,
       };
       Response response = await dio.post(AppApi.registerUrl, data: data);
       if (response.statusCode == 200) {
         final data = response.data["data"];
-        AppSharefPrefHelper.setUserTocker(response.data["token"]);
-        AppSharefPrefHelper.setUserDetail(
+        await AppSharefPrefHelper.setUserTocker(response.data["token"]);
+        await AppSharefPrefHelper.setUserDetail(
           data["name"],
           data["email"],
           data["phone"],
@@ -91,6 +91,16 @@ class _SignUpPageState extends State<SignUpPage> {
           data["is_code_valid"],
           data["photo"] ?? "",
         );
+        final dataa = await AppSharefPrefHelper.getUserNameAndEmail();
+
+        CommonData.userName = dataa[0];
+        CommonData.userEmail = dataa[1];
+        CommonData.userPhone = dataa[2];
+        CommonData.userPhoto = dataa[9];
+        CommonData.userCode = dataa[5];
+        CommonData.isUserSubscribed = dataa[6];
+        CommonData.isWin = dataa[7];
+        CommonData.isCodeValid = dataa[8];
         if (mounted) {
           if (Platform.isAndroid) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(

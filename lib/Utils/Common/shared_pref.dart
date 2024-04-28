@@ -56,13 +56,13 @@ class AppSharefPrefHelper {
       data.add(name);
       data.add(email);
       data.add(userPhone);
-      data.add(userPhoto);
       data.add(userCity);
       data.add(userState);
       data.add(userCode);
       data.add(isUserSubscribed.toString());
       data.add(isWin.toString());
       data.add(isCodeValid.toString());
+      data.add(userPhoto);
     } catch (e) {
       rethrow;
     }
@@ -73,6 +73,24 @@ class AppSharefPrefHelper {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       return prefs.getInt('isSubscribed') == 0 ? false : true;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<bool> setUserName(String name) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return prefs.setString('UserName', name);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<bool> setUserEmail(String email) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return prefs.setString('UserEmail', email);
     } catch (e) {
       rethrow;
     }

@@ -1,6 +1,6 @@
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
-import 'package:ay_caramba/Views/Auth/login_page.dart';
+import 'package:ay_caramba/Views/Splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_custom_utils/util/utils.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: const LoginPage(),
+          home: const SplashScreen(),
         ));
   }
 }

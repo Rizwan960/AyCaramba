@@ -7,4 +7,6 @@ class AppApi {
   static const String logoutUrl = "${baseUrl}logout";
   static const String updateUserUrl = "${baseUrl}updateUser";
   static const String resetPasswordUrl = "${baseUrl}change/password";
+  static const String forgotPasswordUrl = "${baseUrl}forgotPassword";
+  static const String deleteAccount = "${baseUrl}deactivateAccount";
 }

@@ -1,4 +1,5 @@
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
+import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,14 +29,15 @@ class ShareReferralCodePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: ListTile(
-              title: const Text(
-                "120BFR69OR",
+              title: Text(
+                CommonData.userCode,
                 style: AppFonts.normalBlack15,
               ),
               trailing: GestureDetector(
                 onTap: () {
-                  Clipboard.setData(
-                      const ClipboardData(text: "gotap/rizwanali960"));
+                  Clipboard.setData(ClipboardData(text: CommonData.userCode));
+                  CommonData.showCustomSnackbar(
+                      context, "Coppied to clipboard");
                 },
                 child: const Icon(
                   Icons.copy,
@@ -50,16 +52,13 @@ class ShareReferralCodePage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () async {
-                  final Uri emailLaunchUri = Uri(
-                    scheme: 'mailto',
-                    path: "rizwanali96960@gmail.com",
-                    queryParameters: {
-                      'subject': "Creating White Label Application"
-                    },
-                  );
+                  final subject = Uri.encodeComponent("Ay Caramba Refral Code");
+                  final body = Uri.encodeComponent(
+                      "Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${CommonData.userCode} Spread the word and enjoy the perks! Best regards,");
 
-                  if (await canLaunchUrl(emailLaunchUri)) {
-                    await launchUrl(emailLaunchUri);
+                  Uri mail = Uri.parse("mailto:?subject=$subject&body=$body");
+                  if (await canLaunchUrl(mail)) {
+                    await launchUrl(mail);
                   } else {
                     throw 'Could not launch email';
                   }
@@ -86,7 +85,8 @@ class ShareReferralCodePage extends StatelessWidget {
               const SizedBox(width: 10),
               GestureDetector(
                 onTap: () async {
-                  var uri = 'sms:?body=Hi There';
+                  var uri =
+                      "sms:?body=Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${CommonData.userCode} Spread the word and enjoy the perks! Best regards,";
                   if (await canLaunch(uri)) {
                     await launch(uri);
                   } else {
@@ -116,7 +116,7 @@ class ShareReferralCodePage extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   await Share.share(
-                      'check out my website https://www.google.com');
+                      "Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${CommonData.userCode} Spread the word and enjoy the perks! Best regards,");
                 },
                 child: Container(
                   height: 60,

@@ -117,8 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 10),
               EmailNameTileWidget(
-                name: "Leo Thomas",
-                email: "Leaothomas45@dummy.com",
+                name: CommonData.userName,
+                email: CommonData.userEmail,
                 fun: () {
                   if (Platform.isAndroid) {
                     Navigator.of(context).push(MaterialPageRoute(

@@ -11,6 +11,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CommonData {
   static String ongoinOrder = "";
   static String deviceId = "";
+
+  static String userName = "";
+  static String userEmail = "";
+  static String userPhone = "";
+  static String userPhoto = "";
+  static String isUserSubscribed = "";
+  static String isWin = "";
+  static String isCodeValid = "";
+  static String userCode = "";
+
   static Dio getDioInstance() {
     Dio dio = Dio();
     Map<String, dynamic> header = {

@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class PersonalDetailTileWidget extends StatelessWidget {
   final String title;
   final Icon icon;
-  const PersonalDetailTileWidget(
-      {super.key, required this.title, required this.icon});
+  bool? showLock;
+  PersonalDetailTileWidget(
+      {super.key, required this.title, required this.icon, this.showLock});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,12 @@ class PersonalDetailTileWidget extends StatelessWidget {
           style: AppFonts.normalBlack13,
         ),
         leading: icon,
+        trailing: showLock!
+            ? const Icon(
+                Icons.lock,
+                size: 15,
+              )
+            : null,
       ),
     );
   }

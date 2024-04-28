@@ -1,4 +1,6 @@
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
+import 'package:ay_caramba/Utils/Common/common_data.dart';
+import 'package:ay_caramba/Utils/Common/shared_pref.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,27 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final emailController = TextEditingController();
+
+  Future<void> setUserData() async {
+    final data = await AppSharefPrefHelper.getUserNameAndEmail();
+
+    CommonData.userName = data[0];
+    CommonData.userEmail = data[1];
+    CommonData.userPhone = data[2];
+    CommonData.userPhoto = data[9];
+    CommonData.userCode = data[5];
+    CommonData.isUserSubscribed = data[6];
+    CommonData.isWin = data[7];
+    CommonData.isCodeValid = data[8];
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -24,12 +47,13 @@ class _HomePageState extends State<HomePage> {
             flexibleSpace: Stack(
               children: [
                 Image.asset("Assets/Images/home_appbar.png"),
-                const Positioned(
+                Positioned(
                   top: 60,
                   left: 20,
                   child: Text(
-                    "Hello Leo!",
-                    style: TextStyle(color: Color(0XFFE3E3E3), fontSize: 20),
+                    "Hello ${CommonData.userName}!",
+                    style:
+                        const TextStyle(color: Color(0XFFE3E3E3), fontSize: 20),
                   ),
                 ),
                 const Positioned(
