@@ -9,10 +9,11 @@ import 'package:flutter_custom_utils/util/utils.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  WidgetsFlutterBinding.ensureInitialized();
   final id = await cGetDeviceId();
   CommonData.deviceId = id;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

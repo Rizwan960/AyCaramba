@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.ayCaramba</string>
+	<string>com.aycaramba.app</string>
 	<key>PROJECT_ID</key>
 	<string>ay-caramba-2d799</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:358908167465:ios:7edcbe47ee8d3e6345a338</string>
+	<string>1:358908167465:ios:4587cf492658e26f45a338</string>
 </dict>
 </plist>
