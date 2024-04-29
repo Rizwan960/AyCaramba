@@ -200,7 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   showDialog<void>(
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog.adaptive(
+                      return AlertDialog(
                         backgroundColor: AppColors.whiteColor,
                         title: const Column(
                           children: [
@@ -234,6 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   logout();
                                 },
                               ),
+                              const SizedBox(height: 5),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:

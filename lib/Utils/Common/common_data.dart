@@ -63,7 +63,7 @@ class CommonData {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog.adaptive(
+        return AlertDialog(
           backgroundColor: AppColors.whiteColor,
           title: Column(
             children: [
