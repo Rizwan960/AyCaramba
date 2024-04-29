@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0414D0DA2BDF763400C34EF0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0414D0D92BDF763400C34EF0 /* StoreKit.framework */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		24349031D4DDDB381B97A10A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F0E4D259A2E9887E59B69D9 /* GoogleService-Info.plist */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0414D0D92BDF763400C34EF0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04BF02932BDE87AA001BD153 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8F9CAB5E94A6CBBB17C1119 /* Pods_Runner.framework in Frameworks */,
+				0414D0DA2BDF763400C34EF0 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +166,7 @@
 		AF20D117F705F32C31E44758 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0414D0D92BDF763400C34EF0 /* StoreKit.framework */,
 				7D7F4A4D34E0A1CB3BAE555C /* Pods_Runner.framework */,
 				7A1CECCF592A8BEEE7A02EAF /* Pods_RunnerTests.framework */,
 			);
