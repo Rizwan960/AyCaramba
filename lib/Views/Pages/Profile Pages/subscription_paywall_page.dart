@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SubscriptionPayWallPage extends StatefulWidget {
   final bool showAppBar;
@@ -100,21 +102,21 @@ class _SubscriptionPayWallPageState extends State<SubscriptionPayWallPage> {
             : "",
         "channel": Platform.isAndroid ? "play_store" : "app_store"
       };
+      log(data.toString());
+      Dio dio = await CommonData.createDioWithAuthHeader();
+      Response response = await dio.post(AppApi.getSubscription, data: data);
+      if (response.statusCode == 200) {
+        log(response.data.toString());
+        if (context.mounted) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setInt("isSubscribed", 1);
+          CommonData.isUserSubscribed = "1";
+          Navigator.of(context).pop("yes");
+          CommonData.showCustomSnackbar(context, "Upgraded to pro");
 
-      // Dio dio = await CommonData.createDioWithAuthHeader();
-      // Response response = await dio.post(AppApi.getSubscription, data: data);
-      // if (response.statusCode == 200) {
-      //   log(response.data.toString());
-      //   if (context.mounted) {
-      //     SharedPreferences prefs = await SharedPreferences.getInstance();
-      //     await prefs.setInt("isSubscribed", 1);
-      //     CommonData.isCodeValid = 1;
-      //     Navigator.of(context).pop("yes");
-      //     CommonData.showCustomSnackbar(context, "Upgraded to pro");
-
-      //     // showUpgradeDialog(context);
-      //   }
-      // }
+          // showUpgradeDialog(context);
+        }
+      }
     } on DioException catch (e) {
       if (e.type == DioExceptionType.unknown ||
           e.type == DioExceptionType.connectionError ||

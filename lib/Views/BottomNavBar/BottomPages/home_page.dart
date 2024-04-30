@@ -1,14 +1,19 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:ay_caramba/Model/user_model.dart';
+import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
-import 'package:ay_caramba/Utils/Common/shared_pref.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:ay_caramba/Views/Pages/Home%20Pages/history_page.dart';
 import 'package:ay_caramba/Views/Pages/Home%20Pages/sweep_schedule_page.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,25 +24,68 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final emailController = TextEditingController();
-
-  Future<void> setUserData() async {
-    final data = await AppSharefPrefHelper.getUserNameAndEmail();
-
-    CommonData.userName = data[0];
-    CommonData.userEmail = data[1];
-    CommonData.userPhone = data[2];
-    CommonData.userPhoto = data[9];
-    CommonData.userCode = data[5];
-    CommonData.isUserSubscribed = data[6];
-    CommonData.isWin = data[7];
-    CommonData.isCodeValid = data[8];
-    setState(() {});
-  }
+  User user = User.instance;
 
   @override
   void initState() {
     super.initState();
-    setUserData();
+    // loadStoredToken();
+  }
+
+  Future<void> loadStoredToken() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    CommonData.fcmTocken = await messaging.getToken();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedToken;
+    log(CommonData.fcmTocken!);
+    storedToken = prefs.getString('fcm_token');
+    if (storedToken == CommonData.fcmTocken) {
+      return;
+    } else if (storedToken != CommonData.fcmTocken) {
+      await hitFcmTokenApi(CommonData.fcmTocken);
+    }
+  }
+
+  Future<void> hitFcmTokenApi(String? token) async {
+    try {
+      Dio dio = await CommonData.createDioWithAuthHeaderForFcm();
+      final Map<String, dynamic> data = {"fcm_token": CommonData.fcmTocken};
+      Response response = await dio.post(AppApi.baseUrl, data: data);
+
+      if (response.statusCode == 200 &&
+          (response.data['message'] == "FCM Token Added Successfully" ||
+              response.data['message'] == "FCM token updated successfully." ||
+              response.data['message'] == "FCM token updated successfully.")) {
+        if (mounted) {
+          CommonData.showCustomSnackbar(
+              context, "Notification settings updated");
+        }
+      } else {
+        if (mounted) {
+          CommonData.sshowDialog("Error", response.data['message'], context);
+        }
+      }
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.unknown ||
+          e.type == DioExceptionType.connectionError ||
+          e.type == DioExceptionType.connectionTimeout) {
+        if (mounted) {
+          CommonData.showCustomSnackbar(context, "No internet connection");
+        }
+      } else {
+        if (mounted) {
+          CommonData.sshowDialog('Error', e.response!.data['message'], context);
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        CommonData.sshowDialog(
+            "Unexpected behaviour",
+            "An un-expected error accourd restarting your app might resolve this issue",
+            context);
+      }
+      rethrow;
+    }
   }
 
   @override
@@ -55,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                   top: 60,
                   left: 20,
                   child: Text(
-                    "Hello ${CommonData.userName}!",
+                    "Hello ${user.name}!",
                     style:
                         const TextStyle(color: Color(0XFFE3E3E3), fontSize: 20),
                   ),

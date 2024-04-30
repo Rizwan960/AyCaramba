@@ -1,6 +1,22 @@
+import 'dart:convert';
+
+import 'package:ay_caramba/Model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppSharefPrefHelper {
+  static const String _userKey = 'user';
+  static Future<void> saveUser(User user) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String userJson = json.encode(user.toJson());
+    await prefs.setString(_userKey, userJson);
+  }
+
+  static Future<User> getUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userJson = prefs.getString(_userKey);
+    return User.fromJson(json.decode(userJson!));
+  }
+
   static setUserTocker(String token) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();

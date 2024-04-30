@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CommonData {
   static String ongoinOrder = "";
   static String deviceId = "";
-
+  static String? fcmTocken = "";
   static String userName = "";
   static String userEmail = "";
   static String userPhone = "";
@@ -125,5 +125,20 @@ class CommonData {
       webBgColor: "#000000",
       webShowClose: true,
     );
+  }
+
+  static Future<Dio> createDioWithAuthHeaderForFcm() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('UserToken')!;
+
+    Dio dio = Dio();
+    dio.options.headers = {
+      'Device-Id': CommonData.deviceId,
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+          '',
+    };
+
+    return dio;
   }
 }

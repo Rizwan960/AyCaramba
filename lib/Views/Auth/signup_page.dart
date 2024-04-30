@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:ay_caramba/Model/user_model.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
@@ -54,6 +55,10 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
+  User parseUser(dynamic jsonString) {
+    return User.fromJson(jsonString);
+  }
+
   Future<void> saveLoginData() async {
     final isValid = key.currentState!.validate();
     if (!isValid) {
@@ -79,28 +84,13 @@ class _SignUpPageState extends State<SignUpPage> {
       if (response.statusCode == 200) {
         final data = response.data["data"];
         await AppSharefPrefHelper.setUserTocker(response.data["token"]);
-        await AppSharefPrefHelper.setUserDetail(
-          data["name"],
-          data["email"],
-          data["phone"],
-          data["city"],
-          data["state"],
-          data["code"],
-          data["is_subscribed"],
-          data["is_win"],
-          data["is_code_valid"],
-          data["photo"] ?? "",
-        );
-        final dataa = await AppSharefPrefHelper.getUserNameAndEmail();
 
-        CommonData.userName = dataa[0];
-        CommonData.userEmail = dataa[1];
-        CommonData.userPhone = dataa[2];
-        CommonData.userPhoto = dataa[9];
-        CommonData.userCode = dataa[5];
-        CommonData.isUserSubscribed = dataa[6];
-        CommonData.isWin = dataa[7];
-        CommonData.isCodeValid = dataa[8];
+        User user = parseUser(data);
+
+        User currentUser = User.instance;
+        await AppSharefPrefHelper.setUserTocker(response.data["token"]);
+        await AppSharefPrefHelper.saveUser(currentUser);
+        currentUser = await AppSharefPrefHelper.getUser();
         if (mounted) {
           if (Platform.isAndroid) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ay_caramba/Model/user_model.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
@@ -99,6 +100,8 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  User user = User.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,8 +120,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 10),
               EmailNameTileWidget(
-                name: CommonData.userName,
-                email: CommonData.userEmail,
+                name: user.name,
+                email: user.email,
                 fun: () {
                   if (Platform.isAndroid) {
                     Navigator.of(context).push(MaterialPageRoute(

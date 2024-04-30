@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
+import 'package:ay_caramba/Model/user_model.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
@@ -29,8 +31,12 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
+
   bool hidePassword = true;
   bool loading = false;
+  User parseUser(dynamic jsonString) {
+    return User.fromJson(jsonString);
+  }
 
   Future<void> saveLoginData() async {
     bool isValid = key.currentState!.validate();
@@ -49,30 +55,15 @@ class _LoginPageState extends State<LoginPage> {
       };
       Response response = await dio.post(AppApi.loginUrl, data: data);
       if (response.statusCode == 200) {
-        final data = response.data["data"];
-        await AppSharefPrefHelper.setUserTocker(response.data["token"]);
-        await AppSharefPrefHelper.setUserDetail(
-          data["name"],
-          data["email"],
-          data["phone"],
-          data["city"],
-          data["state"],
-          data["code"],
-          data["is_subscribed"],
-          data["is_win"],
-          data["is_code_valid"],
-          data["photo"] ?? "",
-        );
-        final dataa = await AppSharefPrefHelper.getUserNameAndEmail();
+        log(response.data.toString());
 
-        CommonData.userName = dataa[0];
-        CommonData.userEmail = dataa[1];
-        CommonData.userPhone = dataa[2];
-        CommonData.userPhoto = dataa[9];
-        CommonData.userCode = dataa[5];
-        CommonData.isUserSubscribed = dataa[6];
-        CommonData.isWin = dataa[7];
-        CommonData.isCodeValid = dataa[8];
+        final data = response.data["data"];
+        User user = parseUser(data);
+        User currentUser = User.instance;
+        await AppSharefPrefHelper.setUserTocker(response.data["token"]);
+        await AppSharefPrefHelper.saveUser(currentUser);
+        currentUser = await AppSharefPrefHelper.getUser();
+
         if (mounted) {
           if (Platform.isAndroid) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(

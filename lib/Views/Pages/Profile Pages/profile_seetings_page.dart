@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ay_caramba/Model/user_model.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
@@ -27,6 +28,7 @@ class ProfileSeetingsPage extends StatefulWidget {
 class _ProfileSeetingsPageState extends State<ProfileSeetingsPage> {
   final updateController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
+  User user = User.instance;
 
   final key = GlobalKey<FormState>();
   void _showEditOptions(BuildContext context) {
@@ -382,7 +384,7 @@ class _ProfileSeetingsPageState extends State<ProfileSeetingsPage> {
                       const SizedBox(height: 10),
                       PersonalDetailTileWidget(
                         showLock: false,
-                        title: CommonData.userName,
+                        title: user.name,
                         icon: const Icon(
                           CupertinoIcons.person_alt_circle,
                           color: AppColors.yellowTextColor,
@@ -391,7 +393,7 @@ class _ProfileSeetingsPageState extends State<ProfileSeetingsPage> {
                       const SizedBox(height: 10),
                       PersonalDetailTileWidget(
                         showLock: false,
-                        title: CommonData.userEmail,
+                        title: user.email,
                         icon: const Icon(
                           CupertinoIcons.mail_solid,
                           color: AppColors.yellowTextColor,
@@ -400,7 +402,7 @@ class _ProfileSeetingsPageState extends State<ProfileSeetingsPage> {
                       const SizedBox(height: 10),
                       PersonalDetailTileWidget(
                         showLock: true,
-                        title: CommonData.userPhone,
+                        title: user.phone,
                         icon: const Icon(
                           CupertinoIcons.phone_circle_fill,
                           color: AppColors.yellowTextColor,

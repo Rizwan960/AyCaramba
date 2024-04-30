@@ -10,4 +10,5 @@ class AppApi {
   static const String forgotPasswordUrl = "${baseUrl}forgotPassword";
   static const String deleteAccount = "${baseUrl}deactivateAccount";
   static const String verifyRefralCode = "${baseUrl}add/refernece";
+  static const String getSubscription = "${baseUrl}subscriptions/add";
 }
