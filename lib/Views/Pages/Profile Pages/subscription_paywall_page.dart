@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SubscriptionPayWallPage extends StatefulWidget {
   final bool showAppBar;
@@ -108,10 +107,6 @@ class _SubscriptionPayWallPageState extends State<SubscriptionPayWallPage> {
       if (response.statusCode == 200) {
         log(response.data.toString());
         if (context.mounted) {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setInt("isSubscribed", 1);
-          CommonData.isUserSubscribed = "1";
-          Navigator.of(context).pop("yes");
           CommonData.showCustomSnackbar(context, "Upgraded to pro");
 
           // showUpgradeDialog(context);

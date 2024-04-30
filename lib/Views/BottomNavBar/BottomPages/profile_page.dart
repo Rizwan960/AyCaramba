@@ -157,25 +157,27 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 10),
               const NotificationTogleTileWidget(title: "Mute Notifications"),
-              const SizedBox(height: 10),
-              SingleTitleTileWidget(
-                title: "Get Premium Now",
-                fun: () {
-                  if (Platform.isAndroid) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const SubscriptionPayWallPage(
-                        showAppBar: true,
-                      ),
-                    ));
-                  } else {
-                    Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => const SubscriptionPayWallPage(
-                        showAppBar: true,
-                      ),
-                    ));
-                  }
-                },
-              ),
+              if (user.subscription == null) ...[
+                const SizedBox(height: 10),
+                SingleTitleTileWidget(
+                  title: "Get Premium Now",
+                  fun: () {
+                    if (Platform.isAndroid) {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SubscriptionPayWallPage(
+                          showAppBar: true,
+                        ),
+                      ));
+                    } else {
+                      Navigator.of(context).push(CupertinoPageRoute(
+                        builder: (context) => const SubscriptionPayWallPage(
+                          showAppBar: true,
+                        ),
+                      ));
+                    }
+                  },
+                ),
+              ],
               const SizedBox(height: 10),
               SingleTitleTileWidget(
                 title: "Privacy Policy ",

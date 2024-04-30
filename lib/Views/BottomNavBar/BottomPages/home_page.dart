@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     CommonData.fcmTocken = await messaging.getToken();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedToken;
-    log(CommonData.fcmTocken!);
+    log("FCM TOKEN: ${CommonData.fcmTocken!}");
     storedToken = prefs.getString('fcm_token');
     if (storedToken == CommonData.fcmTocken) {
       return;
@@ -49,8 +49,9 @@ class _HomePageState extends State<HomePage> {
   Future<void> hitFcmTokenApi(String? token) async {
     try {
       Dio dio = await CommonData.createDioWithAuthHeaderForFcm();
-      final Map<String, dynamic> data = {"fcm_token": CommonData.fcmTocken};
-      Response response = await dio.post(AppApi.baseUrl, data: data);
+      final Map<String, dynamic> data = {"token": CommonData.fcmTocken};
+      Response response =
+          await dio.post(AppApi.addUpdateRemoveFcmToken, data: data);
 
       if (response.statusCode == 200 &&
           (response.data['message'] == "FCM Token Added Successfully" ||

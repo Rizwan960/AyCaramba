@@ -11,4 +11,6 @@ class AppApi {
   static const String deleteAccount = "${baseUrl}deactivateAccount";
   static const String verifyRefralCode = "${baseUrl}add/refernece";
   static const String getSubscription = "${baseUrl}subscriptions/add";
+  static const String addUpdateRemoveFcmToken = "${baseUrl}fcm_token";
+  static const String testNotificationUrl = "${baseUrl}test-notification/";
 }
