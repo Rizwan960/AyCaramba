@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:ay_caramba/Model/user_model.dart';
@@ -29,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // loadStoredToken();
+    loadStoredToken();
   }
 
   Future<void> loadStoredToken() async {
@@ -37,9 +36,12 @@ class _HomePageState extends State<HomePage> {
     CommonData.fcmTocken = await messaging.getToken();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? storedToken;
-    log("FCM TOKEN: ${CommonData.fcmTocken!}");
     storedToken = prefs.getString('fcm_token');
-    if (storedToken == CommonData.fcmTocken) {
+    if (storedToken == null) {
+      prefs.setString("fcm_token", CommonData.fcmTocken.toString());
+      await hitFcmTokenApi(CommonData.fcmTocken);
+      return;
+    } else if (storedToken == CommonData.fcmTocken) {
       return;
     } else if (storedToken != CommonData.fcmTocken) {
       await hitFcmTokenApi(CommonData.fcmTocken);
@@ -55,8 +57,8 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200 &&
           (response.data['message'] == "FCM Token Added Successfully" ||
-              response.data['message'] == "FCM token updated successfully." ||
-              response.data['message'] == "FCM token updated successfully.")) {
+              response.data['message'] == "FCM Token Updated Successfully" ||
+              response.data['message'] == "FCM token updated successfully")) {
         if (mounted) {
           CommonData.showCustomSnackbar(
               context, "Notification settings updated");

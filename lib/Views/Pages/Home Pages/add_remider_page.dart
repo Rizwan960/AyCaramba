@@ -3,9 +3,14 @@ import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HistoryPage extends StatelessWidget {
-  const HistoryPage({super.key});
+class AddReminderPage extends StatefulWidget {
+  const AddReminderPage({super.key});
 
+  @override
+  State<AddReminderPage> createState() => _AddReminderPageState();
+}
+
+class _AddReminderPageState extends State<AddReminderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +27,7 @@ class HistoryPage extends StatelessWidget {
             )),
         backgroundColor: AppColors.backgroundColor,
         title: const Text(
-          "History",
+          "Add Reminder",
           style: TextStyle(color: AppColors.yellowTextColor, fontSize: 30),
         ),
       ),

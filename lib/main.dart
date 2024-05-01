@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:ay_caramba/Service/notification_services.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
@@ -11,15 +14,32 @@ import 'package:flutter_custom_utils/util/utils.dart';
 import 'package:provider/provider.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  if (message.notification != null) {
+    log("4");
+
+    NotificationService.showNotification(
+        title: message.notification!.title!,
+        body: message.notification!.body!,
+        actionButtons: actionButtons);
+  }
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final actionButtons = [
+  NotificationActionButton(
+    key: 'Verify',
+    label: 'Confirm Now',
+    enabled: true,
+  ),
+];
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final id = await cGetDeviceId();
+  CommonData.deviceId = id;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -27,16 +47,12 @@ void main() async {
   FirebaseMessaging messagingg = FirebaseMessaging.instance;
   FirebaseMessaging.instance.getInitialMessage().then((value) {
     if (value?.notification != null) {
+      log("1");
       NotificationService.showNotification(
-        title: value!.notification!.title!,
-        body: value.notification!.body!,
-      );
+          title: value!.notification!.title!,
+          body: value.notification!.body!,
+          actionButtons: actionButtons);
     }
-    // if (value != null) {
-    //   navigatorKey.currentState!.push(MaterialPageRoute(
-    //     builder: (context) => const NewOrderPage(),
-    //   ));
-    // }
   });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await messagingg.requestPermission(
@@ -54,25 +70,24 @@ void main() async {
   );
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     if (message.notification != null) {
+      log("2");
       NotificationService.showNotification(
-        title: message.notification!.title!,
-        body: message.notification!.body!,
-      );
+          title: message.notification!.title!,
+          body: message.notification!.body!,
+          actionButtons: actionButtons);
     }
   });
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {
+      log("3");
+
       NotificationService.showNotification(
-        title: message.notification!.title!,
-        body: message.notification!.body!,
-      );
+          title: message.notification!.title!,
+          body: message.notification!.body!,
+          actionButtons: actionButtons);
     }
-    // navigatorKey.currentState!.push(MaterialPageRoute(
-    //   builder: (context) => const NewOrderPage(),
-    // ));
   });
-  final id = await cGetDeviceId();
-  CommonData.deviceId = id;
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }

@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:ay_caramba/Model/user_model.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
+import 'package:ay_caramba/Utils/Common/shared_pref.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -88,6 +90,10 @@ class _SubscriptionPayWallPageState extends State<SubscriptionPayWallPage> {
     }
   }
 
+  User parseUser(dynamic jsonString) {
+    return User.fromJson(jsonString);
+  }
+
   Future<void> _verifyPurchase(PurchaseDetails purchaseDetails) async {
     try {
       Map<String, dynamic> data = {
@@ -106,7 +112,13 @@ class _SubscriptionPayWallPageState extends State<SubscriptionPayWallPage> {
       Response response = await dio.post(AppApi.getSubscription, data: data);
       if (response.statusCode == 200) {
         log(response.data.toString());
-        if (context.mounted) {
+        if (mounted) {
+          final data = response.data["data"];
+          User user = parseUser(data);
+          User currentUser = User.instance;
+          await AppSharefPrefHelper.setUserTocker(response.data["token"]);
+          await AppSharefPrefHelper.saveUser(currentUser);
+          currentUser = await AppSharefPrefHelper.getUser();
           CommonData.showCustomSnackbar(context, "Upgraded to pro");
 
           // showUpgradeDialog(context);
@@ -209,6 +221,12 @@ class _SubscriptionPayWallPageState extends State<SubscriptionPayWallPage> {
         Scaffold(
           backgroundColor: AppColors.backgroundColor,
           appBar: AppBar(
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop("yes");
+                },
+                icon: const Icon(CupertinoIcons.back)),
             backgroundColor: AppColors.backgroundColor,
             scrolledUnderElevation: 0,
           ),
