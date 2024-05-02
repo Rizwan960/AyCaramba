@@ -341,7 +341,7 @@ class _HomePageState extends State<HomePage> {
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       borderSide: BorderSide(color: AppColors.blackColor)),
-                  labelText: "Search your remiders",
+                  labelText: "Search your reminders",
                   labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),

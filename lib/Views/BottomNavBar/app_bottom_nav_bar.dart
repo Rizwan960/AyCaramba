@@ -34,7 +34,7 @@ class _AppBottomNavBarState extends State<AppBottomNavBar> {
       inactiveIcon: Icon(CupertinoIcons.person, color: Colors.grey),
       activeIcon:
           Icon(CupertinoIcons.person_fill, color: AppColors.callToActionColor),
-      label: "Person",
+      label: "Setting",
     ),
   ];
 
