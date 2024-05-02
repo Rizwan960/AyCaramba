@@ -6,6 +6,7 @@ import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:ay_caramba/Views/Pages/Home%20Pages/add_remider_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class SweepSchedulePage extends StatefulWidget {
@@ -122,85 +123,113 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                 child: ListView.builder(
                   itemCount: 5,
                   itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        const SizedBox(height: 4),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: ListTile(
-                            title: Text(
-                              "Car $index",
-                              style: AppFonts.normalBlack18,
-                            ),
-                            subtitle: const Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      CupertinoIcons.map_pin,
-                                      size: 15,
-                                      color: AppColors.yellowTextColor,
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "Lorem ipsum dolor sit amet.....",
-                                      style: TextStyle(
-                                          color: Color(0XFF455A64),
-                                          fontSize: 13),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(CupertinoIcons.time,
-                                            size: 15,
-                                            color: AppColors.yellowTextColor),
-                                        SizedBox(width: 10),
-                                        Text("09:00 AM")
-                                      ],
-                                    ),
-                                    SizedBox(width: 20),
-                                    Row(
-                                      children: [
-                                        Icon(CupertinoIcons.bell,
-                                            size: 15,
-                                            color: AppColors.yellowTextColor),
-                                        SizedBox(width: 10),
-                                        Text("30 Mins, 45 Mins ")
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
-                            trailing: Padding(
-                              padding: const EdgeInsets.only(bottom: 10),
-                              child: Container(
-                                height: 50,
-                                width: 40,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: AppColors.yellowTextColor),
-                                child: const Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Mon", style: AppFonts.normalBlack13),
-                                    Text("16", style: AppFonts.normalBlack13),
-                                  ],
+                    return Slidable(
+                      key: UniqueKey(),
+
+                      // The end action pane is the one at the right or the bottom side.
+                      endActionPane: ActionPane(
+                        motion: const ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            // An action can be bigger than the others.
+                            flex: 2,
+                            onPressed: (context) {},
+                            backgroundColor:
+                                const Color.fromARGB(255, 255, 0, 0),
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            label: 'Remove',
+                          ),
+                          SlidableAction(
+                            onPressed: (context) {},
+                            backgroundColor: const Color(0xFF0392CF),
+                            foregroundColor: Colors.white,
+                            icon: Icons.edit,
+                            label: 'Edit',
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 4),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: ListTile(
+                              title: Text(
+                                "Car $index",
+                                style: AppFonts.normalBlack18,
+                              ),
+                              subtitle: const Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        CupertinoIcons.map_pin,
+                                        size: 15,
+                                        color: AppColors.yellowTextColor,
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "Lorem ipsum dolor sit amet.....",
+                                        style: TextStyle(
+                                            color: Color(0XFF455A64),
+                                            fontSize: 13),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(CupertinoIcons.time,
+                                              size: 15,
+                                              color: AppColors.yellowTextColor),
+                                          SizedBox(width: 10),
+                                          Text("09:00 AM")
+                                        ],
+                                      ),
+                                      SizedBox(width: 20),
+                                      Row(
+                                        children: [
+                                          Icon(CupertinoIcons.bell,
+                                              size: 15,
+                                              color: AppColors.yellowTextColor),
+                                          SizedBox(width: 10),
+                                          Text("30 Mins, 45 Mins ")
+                                        ],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                              trailing: Padding(
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: Container(
+                                  height: 50,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: AppColors.yellowTextColor),
+                                  child: const Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Mon",
+                                          style: AppFonts.normalBlack13),
+                                      Text("16", style: AppFonts.normalBlack13),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        if (index == 4) const SizedBox(height: 40),
-                        const SizedBox(height: 4),
-                      ],
+                          if (index == 4) const SizedBox(height: 40),
+                          const SizedBox(height: 4),
+                        ],
+                      ),
                     );
                   },
                 ),
