@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:ay_caramba/Controller/get_all_reminders.dart';
+import 'package:ay_caramba/Model/reminders_model.dart';
 import 'package:ay_caramba/Model/user_model.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
@@ -7,6 +9,7 @@ import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:ay_caramba/Views/Pages/Home%20Pages/history_page.dart';
 import 'package:ay_caramba/Views/Pages/Home%20Pages/sweep_schedule_page.dart';
+import 'package:ay_caramba/Views/Pages/search_reminder_page.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,6 +32,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     loadStoredToken();
+    hitForreminders();
+  }
+
+  Future<void> hitForreminders() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    await GetAllReminders().addNewReminder(context);
+    setState(() {});
   }
 
   Future<void> loadStoredToken() async {
@@ -142,14 +152,18 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 40),
                   GestureDetector(
                     onTap: () {
-                      if (Platform.isAndroid) {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SweepSchedulePage(),
-                        ));
+                      if (ParkingRemindersSingleton().tickets.isEmpty) {
+                        GetAllReminders().addNewReminder(context);
                       } else {
-                        Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (context) => const SweepSchedulePage(),
-                        ));
+                        if (Platform.isAndroid) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const SweepSchedulePage(),
+                          ));
+                        } else {
+                          Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (context) => const SweepSchedulePage(),
+                          ));
+                        }
                       }
                     },
                     child: Container(
@@ -255,58 +269,70 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 10),
                   const Text(
-                    "This Week",
+                    "Reminders",
                     style: AppFonts.normalBlack18,
                   ),
                   const SizedBox(height: 5),
                   SizedBox(
-                    height: 180,
-                    child: ListView.builder(
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: ListTile(
-                                title: Text(
-                                  "Car $index",
-                                  style: AppFonts.normalBlack18,
-                                ),
-                                subtitle: const Text(
-                                  "Lorem ipsum dolor sit amet, consetetur…….",
-                                  style: TextStyle(
-                                      color: Color(0XFF455A64), fontSize: 13),
-                                ),
-                                trailing: Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
-                                  child: Container(
-                                    height: 50,
-                                    width: 40,
+                    height: MediaQuery.of(context).size.height * 0.23,
+                    child: ParkingRemindersSingleton().tickets.isEmpty
+                        ? const Center(
+                            child: Text("No reminders added yet"),
+                          )
+                        : ListView.builder(
+                            itemCount: 2,
+                            itemBuilder: (context, index) {
+                              final data =
+                                  ParkingRemindersSingleton().tickets[index];
+                              return Column(
+                                children: [
+                                  Container(
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.yellowTextColor),
-                                    child: const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text("Mon",
-                                            style: AppFonts.normalBlack13),
-                                        Text("16",
-                                            style: AppFonts.normalBlack13),
-                                      ],
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: ListTile(
+                                      title: Text(
+                                        data.carName,
+                                        style: AppFonts.normalBlack18,
+                                      ),
+                                      subtitle: Text(
+                                        data.street,
+                                        style: const TextStyle(
+                                            color: Color(0XFF455A64),
+                                            fontSize: 13),
+                                      ),
+                                      trailing: Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10),
+                                        child: Container(
+                                          height: 50,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: AppColors.yellowTextColor),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text(data.days[0].substring(0, 3),
+                                                  style:
+                                                      AppFonts.normalBlack13),
+                                              Text(data.days[1].substring(0, 3),
+                                                  style:
+                                                      AppFonts.normalBlack13),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 10)
-                          ],
-                        );
-                      },
-                    ),
+                                  const SizedBox(height: 10)
+                                ],
+                              );
+                            },
+                          ),
                   )
                 ],
               ),
@@ -324,6 +350,18 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: TextFormField(
                 cursorColor: Colors.black,
+                readOnly: true,
+                onTap: () {
+                  if (Platform.isAndroid) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SearchReminderPage(),
+                    ));
+                  } else {
+                    Navigator.of(context).push(CupertinoPageRoute(
+                      builder: (context) => const SearchReminderPage(),
+                    ));
+                  }
+                },
                 onTapOutside: (event) => FocusScope.of(context).unfocus(),
                 controller: emailController,
                 textInputAction: TextInputAction.next,
@@ -341,8 +379,8 @@ class _HomePageState extends State<HomePage> {
                   focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       borderSide: BorderSide(color: AppColors.blackColor)),
-                  labelText: "Search your reminders",
-                  labelStyle: TextStyle(color: Colors.black),
+                  hintText: "Search your reminders",
+                  hintStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       borderSide: BorderSide.none),

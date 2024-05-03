@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:ay_caramba/Model/reminders_model.dart';
 import 'package:ay_caramba/Service/notification_services.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
@@ -102,6 +103,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<LoadingManagemet>(
             create: (context) => LoadingManagemet(),
+          ),
+          ChangeNotifierProvider<ParkingRemindersSingleton>(
+            create: (context) => ParkingRemindersSingleton(),
           ),
         ],
         child: MaterialApp(

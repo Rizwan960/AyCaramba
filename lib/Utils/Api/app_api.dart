@@ -13,4 +13,8 @@ class AppApi {
   static const String getSubscription = "${baseUrl}subscriptions/add";
   static const String addUpdateRemoveFcmToken = "${baseUrl}fcm_token";
   static const String testNotificationUrl = "${baseUrl}test-notification/";
+  static const String addNewReminderUrl = "${baseUrl}add/reminder";
+  static const String editReminderUrl = "${baseUrl}edit/reminder";
+  static const String getAllRemindersUrl = "${baseUrl}reminders";
+  static const String deleteReminderUrl = "${baseUrl}remove/reminder/";
 }

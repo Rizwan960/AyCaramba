@@ -302,7 +302,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             onInputChanged: (PhoneNumber number) {
                               print(number.phoneNumber);
                             },
-                            maxLength: 11,
+                            autoValidateMode:
+                                AutovalidateMode.onUserInteraction,
                             inputDecoration: const InputDecoration(
                               labelText: "Phone",
                               labelStyle: TextStyle(color: Colors.black),
@@ -320,9 +321,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               if (value!.isEmpty) {
                                 return "field should not be empty";
                               }
-                              if (value.length < 12) {
-                                return "invalid phone number";
-                              }
+
                               return null;
                             },
                             onInputValidated: (bool value) {
@@ -334,7 +333,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
                               useBottomSheetSafeArea: true,
                             ),
-                            ignoreBlank: true,
+                            ignoreBlank: false,
                             focusNode: phoneFocusNode,
                             selectorTextStyle:
                                 const TextStyle(color: Colors.black),
