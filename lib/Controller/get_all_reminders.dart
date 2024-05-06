@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:ay_caramba/Model/reminders_model.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
+import 'package:ay_caramba/Views/Pages/Home%20Pages/sweep_schedule_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GetAllReminders {
-  Future<void> addNewReminder(BuildContext context) async {
+  Future<void> addNewReminder(BuildContext context, bool byTap) async {
     Provider.of<LoadingManagemet>(context, listen: false)
         .changeApiHittingBehaviourToTrue();
     try {
@@ -25,6 +28,17 @@ class GetAllReminders {
         for (var jsonObject in data) {
           ParkingReminders ticket = ParkingReminders.fromJson(jsonObject);
           ParkingRemindersSingleton().addTicket(ticket);
+        }
+        if (byTap) {
+          if (Platform.isAndroid) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const SweepSchedulePage(),
+            ));
+          } else {
+            Navigator.of(context).push(CupertinoPageRoute(
+              builder: (context) => const SweepSchedulePage(),
+            ));
+          }
         }
       } else {
         if (context.mounted) {

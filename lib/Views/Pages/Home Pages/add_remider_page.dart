@@ -70,7 +70,6 @@ class _AddReminderPageState extends State<AddReminderPage> {
     'Every Friday and Saturday',
     'Every Friday and Sunday',
     'Every Saturday and Sunday',
-    "Custom"
   ];
   String? selectedValue;
   @override
@@ -86,12 +85,15 @@ class _AddReminderPageState extends State<AddReminderPage> {
     List<String> parts = formattedTime.split(':');
     int hour = int.parse(parts[0]);
     int minute = int.parse(parts[1].split(' ')[0]);
-    String period = parts[1].split(' ')[1];
 
-    if (period == 'am' && hour == 12) {
-      hour = 0;
-    } else if (period == 'pm' && hour != 12) {
+    // If the time is PM and not already in 24-hour format, add 12 hours
+    if (formattedTime.contains('pm') && hour < 12) {
       hour += 12;
+    }
+
+    // If the time is AM and it's 12 AM, convert it to 00 hours
+    if (formattedTime.contains('am') && hour == 12) {
+      hour = 0;
     }
 
     return DateTime(DateTime.now().year, DateTime.now().month,
@@ -136,7 +138,14 @@ class _AddReminderPageState extends State<AddReminderPage> {
     if (extractedDays.isEmpty) return ''; // Handle empty list case
 
     String prefix = 'Every';
-    String result = '$prefix ${extractedDays.join(' and ')}';
+    String result = '';
+
+    if (extractedDays.length == 1) {
+      result = '$prefix ${extractedDays[0]}';
+    } else {
+      result =
+          '$prefix ${extractedDays.sublist(0, extractedDays.length - 1).join(', ')} and ${extractedDays.last}';
+    }
 
     return result;
   }
@@ -386,15 +395,13 @@ class _AddReminderPageState extends State<AddReminderPage> {
                           child: CupertinoDatePicker(
                             mode: CupertinoDatePickerMode.time,
                             initialDateTime: _selectedTime,
-                            itemExtent:
-                                30, // Adjust according to your preference
+                            itemExtent: 30,
                             onDateTimeChanged: (index) {
                               setState(() {
                                 _selectedTime = index;
                               });
-                              formattedDate = _selectedTime.hour > 12
-                                  ? '${_selectedTime.hour - 12}:${_selectedTime.minute.toString().padLeft(2, '0')} pm'
-                                  : '${_selectedTime.hour}:${_selectedTime.minute.toString().padLeft(2, '0')} am';
+                              formattedDate =
+                                  '${_selectedTime.hour}:${_selectedTime.minute.toString().padLeft(2, '0')}';
                             },
                           ),
                         ),

@@ -1,4 +1,3 @@
-import 'package:ay_caramba/Model/reminders_model.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
@@ -8,19 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RemoveReminder {
-  Future<void> addNewReminder(BuildContext context, String id) async {
+  Future<void> addNewReminder(BuildContext context, int id) async {
     Provider.of<LoadingManagemet>(context, listen: false)
         .changeApiHittingBehaviourToTrue();
     try {
       Dio dio = await CommonData.createDioWithAuthHeader();
 
       Response response = await dio.post(
-        AppApi.deleteReminderUrl + id,
+        AppApi.deleteReminderUrl + id.toString(),
       );
       if (response.statusCode == 200 && context.mounted) {
-        Provider.of<LoadingManagemet>(context, listen: false)
-            .changeApiHittingBehaviourToFalse();
-        ParkingRemindersSingleton().removeReminder(int.parse(id));
+        // Provider.of<LoadingManagemet>(context, listen: false)
+        //     .changeApiHittingBehaviourToFalse();
+        // await GetAllReminders().addNewReminder(context, false);
+        CommonData.showCustomSnackbar(context, "Reminder Deleted Successfully");
       } else {
         if (context.mounted) {
           CommonData.sshowDialog("Error", response.data['message'], context);

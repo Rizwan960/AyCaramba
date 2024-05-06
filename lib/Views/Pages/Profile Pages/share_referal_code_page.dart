@@ -1,3 +1,4 @@
+import 'package:ay_caramba/Model/user_model.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
@@ -13,6 +14,8 @@ class ShareReferralCodePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User currentUser = User.instance;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
@@ -30,7 +33,7 @@ class ShareReferralCodePage extends StatelessWidget {
             ),
             child: ListTile(
               title: Text(
-                CommonData.userCode,
+                currentUser.code,
                 style: AppFonts.normalBlack15,
               ),
               trailing: GestureDetector(

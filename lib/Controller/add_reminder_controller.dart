@@ -49,8 +49,9 @@ class AddReminderController {
       if (response!.statusCode == 200 && context.mounted) {
         Provider.of<LoadingManagemet>(context, listen: false)
             .changeApiHittingBehaviourToFalse();
-        await GetAllReminders().addNewReminder(context);
+        await GetAllReminders().addNewReminder(context, false);
         CommonData.showCustomSnackbar(context, "Reminder Added Successfully");
+        Navigator.of(context).pop();
       } else {
         if (context.mounted) {
           CommonData.sshowDialog("Error", response!.data['message'], context);

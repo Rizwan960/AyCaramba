@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> hitForreminders() async {
     await Future.delayed(const Duration(milliseconds: 500));
-    await GetAllReminders().addNewReminder(context);
+    await GetAllReminders().addNewReminder(context, false);
     setState(() {});
   }
 
@@ -111,7 +111,12 @@ class _HomePageState extends State<HomePage> {
             toolbarHeight: 158,
             flexibleSpace: Stack(
               children: [
-                Image.asset("Assets/Images/home_appbar.png"),
+                Image.asset(
+                  "Assets/Images/home_appbar.png",
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
                 Positioned(
                   top: 60,
                   left: 20,
@@ -153,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                   GestureDetector(
                     onTap: () {
                       if (ParkingRemindersSingleton().tickets.isEmpty) {
-                        GetAllReminders().addNewReminder(context);
+                        GetAllReminders().addNewReminder(context, true);
                       } else {
                         if (Platform.isAndroid) {
                           Navigator.of(context).push(MaterialPageRoute(
@@ -274,13 +279,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 5),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.23,
+                    height: MediaQuery.of(context).size.height * 0.2,
                     child: ParkingRemindersSingleton().tickets.isEmpty
                         ? const Center(
                             child: Text("No reminders added yet"),
                           )
                         : ListView.builder(
-                            itemCount: 2,
+                            itemCount:
+                                ParkingRemindersSingleton().tickets.length,
                             itemBuilder: (context, index) {
                               final data =
                                   ParkingRemindersSingleton().tickets[index];
@@ -319,9 +325,12 @@ class _HomePageState extends State<HomePage> {
                                               Text(data.days[0].substring(0, 3),
                                                   style:
                                                       AppFonts.normalBlack13),
-                                              Text(data.days[1].substring(0, 3),
-                                                  style:
-                                                      AppFonts.normalBlack13),
+                                              if (data.days.length > 1)
+                                                Text(
+                                                    data.days[1]
+                                                        .substring(0, 3),
+                                                    style:
+                                                        AppFonts.normalBlack13),
                                             ],
                                           ),
                                         ),

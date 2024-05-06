@@ -1,12 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:ay_caramba/Controller/remove_reminder.dart';
+import 'package:ay_caramba/Controller/get_all_reminders.dart';
 import 'package:ay_caramba/Model/reminders_model.dart';
+import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
+import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
 import 'package:ay_caramba/Views/Pages/Home%20Pages/add_remider_page.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -22,8 +25,69 @@ class SweepSchedulePage extends StatefulWidget {
 }
 
 class _SweepSchedulePageState extends State<SweepSchedulePage> {
+  Future<void> addNewReminder(int id) async {
+    Provider.of<LoadingManagemet>(context, listen: false)
+        .changeApiHittingBehaviourToTrue();
+    try {
+      Dio dio = await CommonData.createDioWithAuthHeader();
+
+      Response response = await dio.post(
+        "${AppApi.deleteReminderUrl}/$id",
+      );
+      if (response.statusCode == 200 && mounted) {
+        Provider.of<LoadingManagemet>(context, listen: false)
+            .changeApiHittingBehaviourToFalse();
+        await GetAllReminders().addNewReminder(context, false);
+        CommonData.showCustomSnackbar(context, "Reminder Deleted Successfully");
+      } else {
+        if (mounted) {
+          CommonData.sshowDialog("Error", response.data['message'], context);
+        }
+      }
+    } on DioException catch (e) {
+      if (e.type == DioExceptionType.unknown ||
+          e.type == DioExceptionType.connectionError ||
+          e.type == DioExceptionType.connectionTimeout) {
+        if (mounted) {
+          Provider.of<LoadingManagemet>(context, listen: false)
+              .changeApiHittingBehaviourToFalse();
+
+          CommonData.showCustomSnackbar(context, "No internet connection");
+        }
+      } else {
+        if (mounted) {
+          Provider.of<LoadingManagemet>(context, listen: false)
+              .changeApiHittingBehaviourToFalse();
+
+          if (context.mounted) {
+            CommonData.sshowDialog(
+                'Error', e.response!.data['message'], context);
+          }
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        Provider.of<LoadingManagemet>(context, listen: false)
+            .changeApiHittingBehaviourToFalse();
+      }
+
+      if (mounted) {
+        CommonData.sshowDialog(
+            "Unexpected behaviour",
+            "An un-expected error accourd restarting your app might resolve this issue",
+            context);
+      }
+      rethrow;
+    }
+    if (mounted) {
+      Provider.of<LoadingManagemet>(context, listen: false)
+          .changeApiHittingBehaviourToFalse();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    log(CommonData.fcmTocken.toString());
     return Consumer<LoadingManagemet>(
       builder: (context, loading, _) {
         return Consumer<ParkingRemindersSingleton>(
@@ -151,12 +215,10 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                           motion: const ScrollMotion(),
                                           children: [
                                             SlidableAction(
-                                              // An action can be bigger than the others.
                                               flex: 2,
-                                              onPressed: (context) =>
-                                                  RemoveReminder()
-                                                      .addNewReminder(context,
-                                                          data.id.toString()),
+                                              onPressed: (context) {
+                                                addNewReminder(data.id);
+                                              },
                                               backgroundColor:
                                                   const Color.fromARGB(
                                                       255, 255, 0, 0),
@@ -295,12 +357,15 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                                     0, 3),
                                                             style: AppFonts
                                                                 .normalBlack13),
-                                                        Text(
-                                                            data.days[1]
-                                                                .substring(
-                                                                    0, 3),
-                                                            style: AppFonts
-                                                                .normalBlack13),
+                                                        if (data.days.length >
+                                                            1) ...[
+                                                          Text(
+                                                              data.days[1]
+                                                                  .substring(
+                                                                      0, 3),
+                                                              style: AppFonts
+                                                                  .normalBlack13),
+                                                        ]
                                                       ],
                                                     ),
                                                   ),
