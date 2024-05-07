@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:ay_caramba/Model/user_model.dart';
@@ -34,9 +35,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
     try {
       Dio dio = await CommonData.createDioWithAuthHeader();
-
       Response response = await dio.get(AppApi.logoutUrl);
-      if (response.statusCode == 200) {
+      Response response1 = await dio.delete(AppApi.addUpdateRemoveFcmToken);
+      if (response.statusCode == 200 && response1.statusCode == 200) {
+        log(response1.data.toString());
         SharedPreferences pref = await SharedPreferences.getInstance();
         await pref.clear();
         if (mounted) {

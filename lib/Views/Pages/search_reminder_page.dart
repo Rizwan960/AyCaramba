@@ -168,8 +168,10 @@ class _SearchReminderPageState extends State<SearchReminderPage> {
                                   children: [
                                     Text(data.days[0].substring(0, 3),
                                         style: AppFonts.normalBlack13),
-                                    Text(data.days[1].substring(0, 3),
-                                        style: AppFonts.normalBlack13),
+                                    if (data.days.length > 1) ...[
+                                      Text(data.days[1].substring(0, 3),
+                                          style: AppFonts.normalBlack13),
+                                    ]
                                   ],
                                 ),
                               ),

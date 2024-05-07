@@ -340,7 +340,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                           leadingIcon:
                               const Icon(Icons.numbers, color: Colors.grey),
                           textInputType: TextInputType.number,
-                          hintText: "Car Number",
+                          hintText: "Car Plate Number",
                           nextFocusNode: carModelFocusNode,
                           isLastField: false,
                           validationReqired: true,
@@ -353,7 +353,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                           leadingIcon:
                               const Icon(Icons.numbers, color: Colors.grey),
                           textInputType: TextInputType.number,
-                          hintText: "Car Model",
+                          hintText: "Car Model Year",
                           nextFocusNode: carColorFocusNode,
                           isLastField: false,
                           validationReqired: true,

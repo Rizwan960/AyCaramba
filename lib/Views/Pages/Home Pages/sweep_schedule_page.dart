@@ -85,9 +85,19 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
     }
   }
 
+  String convertToHours(String minutesString) {
+    int minutes = int.tryParse(minutesString) ?? 0;
+    int hours = minutes ~/ 60;
+    int remainingMinutes = minutes % 60;
+    if (hours == 0) {
+      return '$remainingMinutes mins';
+    } else {
+      return '$hours hours and $remainingMinutes mins';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    log(CommonData.fcmTocken.toString());
     return Consumer<LoadingManagemet>(
       builder: (context, loading, _) {
         return Consumer<ParkingRemindersSingleton>(
@@ -119,7 +129,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                 decoration: BoxDecoration(
                                     color: AppColors.backgroundColor,
                                     borderRadius: BorderRadius.circular(30)),
-                                height: 260,
+                                height: 250,
                                 child: TableCalendar(
                                   onDaySelected: (selectedDay, focusedDay) {
                                     log(selectedDay.toString());
@@ -162,6 +172,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -197,6 +208,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                               )
                             ],
                           ),
+                          const SizedBox(height: 10),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.46,
                             child: value.tickets.isEmpty
@@ -326,7 +338,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                             const SizedBox(
                                                                 width: 10),
                                                             Text(
-                                                                "${data.reminderTime} mins before")
+                                                                "${convertToHours(data.reminderTime)} before")
                                                           ],
                                                         )
                                                       ],

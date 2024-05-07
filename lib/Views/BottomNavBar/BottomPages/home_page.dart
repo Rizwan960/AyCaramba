@@ -108,26 +108,29 @@ class _HomePageState extends State<HomePage> {
         Scaffold(
           appBar: AppBar(
             backgroundColor: AppColors.backgroundColor,
-            toolbarHeight: 158,
+            toolbarHeight: 200,
             flexibleSpace: Stack(
               children: [
-                Image.asset(
-                  "Assets/Images/home_appbar.png",
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
-                  fit: BoxFit.cover,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.asset(
+                    "Assets/Images/home_appbar.png",
+                    width: MediaQuery.of(context).size.width,
+                    height: 260,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Positioned(
-                  top: 60,
+                  top: 90,
                   left: 20,
                   child: Text(
                     "Hello ${user.name}!",
                     style:
-                        const TextStyle(color: Color(0XFFE3E3E3), fontSize: 20),
+                        const TextStyle(color: Color(0XFFE3E3E3), fontSize: 22),
                   ),
                 ),
                 const Positioned(
-                  top: 100,
+                  top: 130,
                   left: 20,
                   child: SizedBox(
                     width: 200,
@@ -138,11 +141,11 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Positioned(
-                    top: 80,
+                    top: 100,
                     right: 20,
                     child: SvgPicture.asset(
                       "Assets/Svg/logo.svg",
-                      height: 60,
+                      height: 80,
                     ))
               ],
             ),
@@ -349,7 +352,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Positioned(
-          top: 175,
+          top: 215,
           left: 0,
           right: 0,
           child: SizedBox(
