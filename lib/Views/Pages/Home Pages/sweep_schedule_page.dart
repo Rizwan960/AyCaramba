@@ -177,7 +177,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text(
-                                "Remiders",
+                                "Reminders",
                                 style: TextStyle(
                                     color: AppColors.yellowTextColor,
                                     fontSize: 25,
@@ -326,7 +326,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                           ],
                                                         ),
                                                         const SizedBox(
-                                                            width: 20),
+                                                            width: 10),
                                                         Row(
                                                           children: [
                                                             const Icon(
@@ -336,7 +336,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                                 color: AppColors
                                                                     .yellowTextColor),
                                                             const SizedBox(
-                                                                width: 10),
+                                                                width: 5),
                                                             Text(
                                                                 "${convertToHours(data.reminderTime)} before")
                                                           ],

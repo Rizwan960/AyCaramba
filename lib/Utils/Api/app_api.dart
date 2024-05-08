@@ -17,4 +17,6 @@ class AppApi {
   static const String editReminderUrl = "${baseUrl}edit/reminder";
   static const String getAllRemindersUrl = "${baseUrl}reminders";
   static const String deleteReminderUrl = "${baseUrl}remove/reminder";
+  static const String getAllNotifications = "${baseUrl}notifications";
+  static const String verifyNotification = "${baseUrl}verify-notification";
 }

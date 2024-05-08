@@ -1,5 +1,6 @@
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:regexpattern/regexpattern.dart';
 
 class AuthTextFieldWidget extends StatefulWidget {
@@ -36,6 +37,10 @@ class _AuthTextFieldWidgetState extends State<AuthTextFieldWidget> {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: widget.showPassword ?? false,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(
+            RegExp(r'^[a-zA-Z0-9]+$')), // Allow only letters and digits
+      ],
       controller: widget.controller,
       textCapitalization: widget.hintText == "Email Address" ||
               widget.hintText == "Password" ||

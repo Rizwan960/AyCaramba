@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ay_caramba/Controller/get_all_notifications.dart';
 import 'package:ay_caramba/Controller/get_all_reminders.dart';
 import 'package:ay_caramba/Model/reminders_model.dart';
 import 'package:ay_caramba/Model/user_model.dart';
@@ -38,6 +39,8 @@ class _HomePageState extends State<HomePage> {
   Future<void> hitForreminders() async {
     await Future.delayed(const Duration(milliseconds: 500));
     await GetAllReminders().addNewReminder(context, false);
+    await Future.delayed(const Duration(milliseconds: 100));
+    await GetAllNotifications().getAllNotifications(context);
     setState(() {});
   }
 
@@ -112,7 +115,7 @@ class _HomePageState extends State<HomePage> {
             flexibleSpace: Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(40),
+                  borderRadius: BorderRadius.circular(30),
                   child: Image.asset(
                     "Assets/Images/home_appbar.png",
                     width: MediaQuery.of(context).size.width,
@@ -175,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                       }
                     },
                     child: Container(
-                      height: 110,
+                      height: 90,
                       decoration: BoxDecoration(
                           border: Border.all(
                             color: const Color.fromARGB(255, 174, 148, 120),
@@ -232,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                       }
                     },
                     child: Container(
-                      height: 110,
+                      height: 90,
                       decoration: BoxDecoration(
                           border: Border.all(
                             color: const Color.fromARGB(255, 174, 148, 120),
@@ -282,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 5),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.22,
                     child: ParkingRemindersSingleton().tickets.isEmpty
                         ? const Center(
                             child: Text("No reminders added yet"),
