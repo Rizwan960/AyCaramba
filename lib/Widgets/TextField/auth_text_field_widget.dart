@@ -37,10 +37,12 @@ class _AuthTextFieldWidgetState extends State<AuthTextFieldWidget> {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: widget.showPassword ?? false,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(
-            RegExp(r'^[a-zA-Z0-9]+$')), // Allow only letters and digits
-      ],
+      inputFormatters: widget.hintText == "Car Plate Number"
+          ? [
+              FilteringTextInputFormatter.allow(
+                  RegExp(r'^[a-zA-Z0-9]+$')), // Allow only letters and digits
+            ]
+          : null,
       controller: widget.controller,
       textCapitalization: widget.hintText == "Email Address" ||
               widget.hintText == "Password" ||

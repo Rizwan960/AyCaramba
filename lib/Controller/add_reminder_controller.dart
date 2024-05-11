@@ -32,7 +32,7 @@ class AddReminderController {
         "color": carColor,
         "street": carParkStreetAddress,
         "ticket_fees": ticketFees,
-        "days": reminderDays,
+        "days": ["Saturday"],
         "time": reminderTime,
         "reminder_time": remindBeforeTime == "12 hours"
             ? "720"

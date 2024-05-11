@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (message.notification != null) {
-    log("4");
+    log(message.notification.toString());
 
     NotificationService.showNotification(
         title: message.notification!.title!,
@@ -48,9 +48,10 @@ void main() async {
   FirebaseMessaging messagingg = FirebaseMessaging.instance;
   FirebaseMessaging.instance.getInitialMessage().then((value) {
     if (value?.notification != null) {
-      log("1");
+      log(value!.notification.toString());
+
       NotificationService.showNotification(
-          title: value!.notification!.title!,
+          title: value.notification!.title!,
           body: value.notification!.body!,
           actionButtons: actionButtons);
     }
@@ -71,7 +72,8 @@ void main() async {
   );
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     if (message.notification != null) {
-      log("2");
+      log(message.notification.toString());
+
       NotificationService.showNotification(
           title: message.notification!.title!,
           body: message.notification!.body!,
@@ -80,7 +82,7 @@ void main() async {
   });
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {
-      log("3");
+      log(message.notification.toString());
 
       NotificationService.showNotification(
           title: message.notification!.title!,
