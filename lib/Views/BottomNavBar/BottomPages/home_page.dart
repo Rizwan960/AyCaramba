@@ -324,19 +324,23 @@ class _HomePageState extends State<HomePage> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               color: AppColors.yellowTextColor),
-                                          child: Column(
+                                          child: const Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceAround,
                                             children: [
-                                              Text(data.days[0].substring(0, 3),
-                                                  style:
-                                                      AppFonts.normalBlack13),
-                                              if (data.days.length > 1)
-                                                Text(
-                                                    data.days[1]
-                                                        .substring(0, 3),
-                                                    style:
-                                                        AppFonts.normalBlack13),
+                                              Icon(
+                                                CupertinoIcons.bell,
+                                                color: Colors.white,
+                                              )
+                                              // Text(data.days[0].substring(0, 3),
+                                              //     style:
+                                              //         AppFonts.normalBlack13),
+                                              // if (data.days.length > 1)
+                                              //   Text(
+                                              //       data.days[1]
+                                              //           .substring(0, 3),
+                                              //       style:
+                                              //           AppFonts.normalBlack13),
                                             ],
                                           ),
                                         ),

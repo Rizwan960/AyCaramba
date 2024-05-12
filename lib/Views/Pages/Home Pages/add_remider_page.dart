@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ay_caramba/Controller/add_reminder_controller.dart';
 import 'package:ay_caramba/Model/reminders_model.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
@@ -40,17 +42,22 @@ class _AddReminderPageState extends State<AddReminderPage> {
   final carNumberFocusNode = FocusNode();
   final carModelFocusNode = FocusNode();
   final carColorFocusNode = FocusNode();
+  List<String> selectedDays = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+  ];
+  final List<String> selectedDates = [];
   final carFineFocusNode = FocusNode();
   final carParkLocationFocusNode = FocusNode();
-  final List<String> items = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday',
-  ];
+  String dayOfWeeek = "";
+  bool isWeekly = false;
+  bool isMonthly = false;
+  bool isCustom = false;
   String? selectedValue;
   @override
   void dispose() {
@@ -113,6 +120,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
     }
 
     String dayOfWeek = dayNames[weekdayIndex];
+    dayOfWeeek = dayOfWeek;
     List<String> options = List<String>.from(_dayOptions);
     options[1] += dayOfWeek;
     options[2] += 'first $dayOfWeek';
@@ -135,7 +143,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
       carParkLocationController.text = widget.parkingReminders!.street;
       carfineController.text = widget.parkingReminders!.ticketFees;
       _selectedTime = convertToOriginalDateTime(widget.parkingReminders!.time);
-      selectedValue = revertDays(widget.parkingReminders!.days);
+      // selectedValue = revertDays(widget.parkingReminders!.days);
       setState(() {});
     }
   }
@@ -268,6 +276,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
       return;
     }
     key.currentState!.save();
+    log(selectedDays.toString());
     widget.parkingReminders == null
         ? AddReminderController().addNewReminder(
             carNameController.text,
@@ -276,9 +285,12 @@ class _AddReminderPageState extends State<AddReminderPage> {
             carColorController.text,
             carParkLocationController.text,
             formattedDate,
-            extractDays(selectedValue.toString()),
+            isCustom ? selectedDates : selectedDays,
             _selectedTimeFrame,
             carfineController.text,
+            isWeekly,
+            isMonthly,
+            isCustom,
             context,
           )
         : AddReminderController().addNewReminder(
@@ -288,12 +300,16 @@ class _AddReminderPageState extends State<AddReminderPage> {
             carColorController.text,
             carParkLocationController.text,
             formattedDate,
-            extractDays(selectedValue.toString()),
+            isCustom ? selectedDates : selectedDays,
             _selectedTimeFrame,
             carfineController.text,
+            isWeekly,
+            isMonthly,
+            isCustom,
             context,
             widget.parkingReminders!.id.toString(),
-            true);
+            true,
+          );
   }
 
   @override
@@ -461,7 +477,6 @@ class _AddReminderPageState extends State<AddReminderPage> {
                                     return _selectedDates.contains(day);
                                   },
                                   onDaySelected: (selectedDay, focusedDay) {
-                                    // Check if selectedDay is not before the current date and not in the next month
                                     if (!selectedDay.isBefore(DateTime.now()) &&
                                         selectedDay.month ==
                                             DateTime.now().month) {
@@ -473,7 +488,12 @@ class _AddReminderPageState extends State<AddReminderPage> {
                                           _selectedDates.add(selectedDay);
                                         }
                                       });
-                                      print(_selectedDates);
+
+                                      // Format the selected date
+                                      String formattedDate =
+                                          "${selectedDay.year}-${selectedDay.month.toString().padLeft(2, '0')}-${selectedDay.day.toString().padLeft(2, '0')}";
+
+                                      selectedDates.add(formattedDate);
                                     }
                                   },
                                 )
@@ -494,6 +514,61 @@ class _AddReminderPageState extends State<AddReminderPage> {
                                       setState(() {
                                         _selectedOption = value;
                                       });
+                                      log(value.toString());
+                                      if (value.toString() == "Daily") {
+                                        selectedDays.clear();
+                                        selectedDays = [
+                                          "Monday",
+                                          "Tuesday",
+                                          "Wednesday",
+                                          "Thursday",
+                                          "Friday",
+                                          "Saturday",
+                                          "Sunday"
+                                        ];
+                                        setState(() {
+                                          isWeekly = true;
+                                        });
+                                      } else if (value
+                                          .toString()
+                                          .contains("Weekly on $dayOfWeeek")) {
+                                        selectedDays.clear();
+                                        selectedDays = [dayOfWeeek];
+                                        setState(() {
+                                          isWeekly = true;
+                                          isMonthly = false;
+                                        });
+                                      } else if (value.toString().contains(
+                                          "Monthly on the first $dayOfWeeek")) {
+                                        selectedDays.clear();
+                                        selectedDays = [dayOfWeeek];
+                                        setState(() {
+                                          isMonthly = true;
+                                          isWeekly = false;
+                                        });
+                                      } else if (value
+                                          .toString()
+                                          .contains("Every weekday")) {
+                                        selectedDays.clear();
+                                        selectedDays = [
+                                          "Monday",
+                                          "Tuesday",
+                                          "Wednesday",
+                                          "Thursday",
+                                          "Friday"
+                                        ];
+                                        setState(() {
+                                          isWeekly = true;
+                                          isMonthly = false;
+                                        });
+                                      } else if (value.toString() == "Custom") {
+                                        selectedDates.clear();
+                                        setState(() {
+                                          isCustom = true;
+                                          isMonthly = false;
+                                          isWeekly = false;
+                                        });
+                                      }
                                     },
                                   ),
                                 ),

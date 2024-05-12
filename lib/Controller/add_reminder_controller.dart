@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ay_caramba/Controller/get_all_reminders.dart';
 import 'package:ay_caramba/Utils/Api/app_api.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
@@ -18,6 +20,9 @@ class AddReminderController {
       List<String> reminderDays,
       String remindBeforeTime,
       String ticketFees,
+      bool isWeekly,
+      bool isMonthly,
+      bool isCustome,
       BuildContext context,
       [String? id,
       bool? updateFunction]) async {
@@ -32,7 +37,11 @@ class AddReminderController {
         "color": carColor,
         "street": carParkStreetAddress,
         "ticket_fees": ticketFees,
-        "days": ["Sunday"],
+        "days": {
+          "is_weekly": isWeekly == false ? "" : reminderDays,
+          "is_monthly": isMonthly == false ? "" : reminderDays,
+          "is_custom": isCustome == false ? "" : reminderDays,
+        },
         "time": reminderTime,
         "reminder_time": remindBeforeTime == "12 hours"
             ? "720"
@@ -40,6 +49,7 @@ class AddReminderController {
         "is_repeat": 1,
         if (updateFunction == true) "reminder_id": id.toString()
       };
+      log(data.toString());
       if (updateFunction == true) {
         response = await dio.post(AppApi.editReminderUrl, data: data);
       } else {

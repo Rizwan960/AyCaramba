@@ -9,7 +9,7 @@ class ParkingReminders {
   final String color;
   final String street;
   final String ticketFees;
-  final List<String> days;
+  List<String>? days;
   final bool isRepeat;
   final String time;
   final String reminderTime;
@@ -25,7 +25,7 @@ class ParkingReminders {
     required this.color,
     required this.street,
     required this.ticketFees,
-    required this.days,
+    this.days,
     required this.isRepeat,
     required this.time,
     required this.reminderTime,
@@ -43,7 +43,7 @@ class ParkingReminders {
       color: json['color'],
       street: json['street'],
       ticketFees: json['ticket_fees'],
-      days: List<String>.from(json['days']),
+      // days: List<String>.from(json['days']),
       isRepeat: json['is_repeat'] == 1,
       time: json['time'],
       reminderTime: json['reminder_time'],

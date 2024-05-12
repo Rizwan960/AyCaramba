@@ -98,7 +98,6 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    log(CommonData.fcmTocken.toString());
     return Consumer<LoadingManagemet>(
       builder: (context, loading, _) {
         return Consumer<ParkingRemindersSingleton>(
@@ -136,11 +135,10 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                     log(selectedDay.toString());
                                   },
                                   calendarStyle: const CalendarStyle(
-                                      markerSize: 20,
                                       todayDecoration: BoxDecoration(
-                                        color: AppColors.callToActionColor,
-                                        shape: BoxShape.circle,
-                                      )),
+                                    color: AppColors.callToActionColor,
+                                    shape: BoxShape.circle,
+                                  )),
                                   headerStyle: const HeaderStyle(
                                     formatButtonVisible: false,
                                   ),
@@ -359,26 +357,15 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                                 .circular(10),
                                                         color: AppColors
                                                             .yellowTextColor),
-                                                    child: Column(
+                                                    child: const Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
                                                               .spaceAround,
                                                       children: [
-                                                        Text(
-                                                            data.days[0]
-                                                                .substring(
-                                                                    0, 3),
-                                                            style: AppFonts
-                                                                .normalBlack13),
-                                                        if (data.days.length >
-                                                            1) ...[
-                                                          Text(
-                                                              data.days[1]
-                                                                  .substring(
-                                                                      0, 3),
-                                                              style: AppFonts
-                                                                  .normalBlack13),
-                                                        ]
+                                                        Icon(
+                                                          CupertinoIcons.bell,
+                                                          color: Colors.white,
+                                                        )
                                                       ],
                                                     ),
                                                   ),
