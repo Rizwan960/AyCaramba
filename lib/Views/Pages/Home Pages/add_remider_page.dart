@@ -106,8 +106,13 @@ class _AddReminderPageState extends State<AddReminderPage> {
       'Friday',
       'Saturday'
     ];
+    int weekdayIndex = selectedDate.weekday - 1;
+    if (weekdayIndex < 0 || weekdayIndex >= dayNames.length) {
+      // Handle out-of-range weekdayIndex here
+      return [];
+    }
 
-    String dayOfWeek = dayNames[selectedDate.weekday];
+    String dayOfWeek = dayNames[weekdayIndex];
     List<String> options = List<String>.from(_dayOptions);
     options[1] += dayOfWeek;
     options[2] += 'first $dayOfWeek';

@@ -98,6 +98,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
 
   @override
   Widget build(BuildContext context) {
+    log(CommonData.fcmTocken.toString());
     return Consumer<LoadingManagemet>(
       builder: (context, loading, _) {
         return Consumer<ParkingRemindersSingleton>(

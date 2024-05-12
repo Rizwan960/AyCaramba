@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:ay_caramba/Model/reminders_model.dart';
 import 'package:ay_caramba/Service/notification_services.dart';
@@ -16,8 +14,7 @@ import 'package:provider/provider.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (message.notification != null) {
-    log(message.notification.toString());
-
+    // log(message.data["notification_id"]);
     NotificationService.showNotification(
         title: message.notification!.title!,
         body: message.notification!.body!,
@@ -48,10 +45,9 @@ void main() async {
   FirebaseMessaging messagingg = FirebaseMessaging.instance;
   FirebaseMessaging.instance.getInitialMessage().then((value) {
     if (value?.notification != null) {
-      log(value!.notification.toString());
-
+      // log(value!.data["notification_id"]);
       NotificationService.showNotification(
-          title: value.notification!.title!,
+          title: value!.notification!.title!,
           body: value.notification!.body!,
           actionButtons: actionButtons);
     }
@@ -72,8 +68,7 @@ void main() async {
   );
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     if (message.notification != null) {
-      log(message.notification.toString());
-
+      // log(message.data["notification_id"]);
       NotificationService.showNotification(
           title: message.notification!.title!,
           body: message.notification!.body!,
@@ -82,8 +77,7 @@ void main() async {
   });
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {
-      log(message.notification.toString());
-
+      // log(message.data["notification_id"]);
       NotificationService.showNotification(
           title: message.notification!.title!,
           body: message.notification!.body!,

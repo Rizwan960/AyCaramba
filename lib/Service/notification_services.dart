@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
@@ -67,10 +69,9 @@ class NotificationService {
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
     debugPrint('onActionReceivedMethod');
-    final payload = receivedAction.payload ?? {};
-    if (payload["navigate"] == "true") {
-      // Naviagate to other screens
-    }
+    final payload = receivedAction.toString();
+    // final notificationId = payload['notification_id'];
+    log('Notification ID: $payload');
   }
 
   static Future<void> showNotification({
