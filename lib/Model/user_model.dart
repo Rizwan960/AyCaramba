@@ -106,6 +106,7 @@ class User {
   final Subscription? subscription;
   final int isAwarded;
   final int isCodeValid;
+  final int isValidOffer;
   final DateTime createdAt;
 
   static User? _instance; // Singleton instance variable
@@ -124,6 +125,7 @@ class User {
     required this.subscription,
     required this.isAwarded,
     required this.isCodeValid,
+    required this.isValidOffer,
     required this.createdAt,
   });
 
@@ -141,6 +143,7 @@ class User {
     required Subscription? subscription,
     required int isAwarded,
     required int isCodeValid,
+    required int isValidOffer,
     required DateTime createdAt,
   }) {
     _instance ??= User._(
@@ -156,6 +159,7 @@ class User {
       subscription: subscription,
       isAwarded: isAwarded,
       isCodeValid: isCodeValid,
+      isValidOffer: isValidOffer,
       createdAt: createdAt,
     );
     return _instance!;
@@ -183,6 +187,7 @@ class User {
           : null,
       isAwarded: json['is_awarded'],
       isCodeValid: json['is_code_valid'],
+      isValidOffer: json["is_valid_offer"] ?? 0,
       createdAt: DateTime.parse(json['created_at']),
     );
   }

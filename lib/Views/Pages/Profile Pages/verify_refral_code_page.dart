@@ -60,6 +60,8 @@ class _VerifyReferalCodePageState extends State<VerifyReferalCodePage>
       Response response = await dio.post(AppApi.verifyRefralCode, data: data);
       if (response.statusCode == 200) {
         log(response.data.toString());
+        CommonData.showCustomSnackbar(context, response.data["message"]);
+        Navigator.of(context).pop();
       } else {
         if (mounted) {
           CommonData.sshowDialog("Error", response.data['message'], context);

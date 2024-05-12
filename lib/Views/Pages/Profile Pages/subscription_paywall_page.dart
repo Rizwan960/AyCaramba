@@ -8,12 +8,14 @@ import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Common/shared_pref.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
+import 'package:ay_caramba/Views/Splash/splash_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SubscriptionPayWallPage extends StatefulWidget {
   final bool showAppBar;
@@ -116,11 +118,28 @@ class _SubscriptionPayWallPageState extends State<SubscriptionPayWallPage> {
           final data = response.data["data"];
           User user = parseUser(data);
           User currentUser = User.instance;
-          await AppSharefPrefHelper.setUserTocker(response.data["token"]);
           await AppSharefPrefHelper.saveUser(currentUser);
           currentUser = await AppSharefPrefHelper.getUser();
+          log(currentUser.subscription.toString());
           CommonData.showCustomSnackbar(context, "Upgraded to pro");
-
+          if (!widget.showAppBar) {
+            SharedPreferences sharedPreferences =
+                await SharedPreferences.getInstance();
+            sharedPreferences.clear();
+            if (Platform.isAndroid) {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => const SplashScreen(),
+                  ),
+                  (route) => false);
+            } else {
+              Navigator.of(context).pushAndRemoveUntil(
+                  CupertinoPageRoute(
+                    builder: (context) => const SplashScreen(),
+                  ),
+                  (route) => false);
+            }
+          }
           // showUpgradeDialog(context);
         }
       }
@@ -223,9 +242,11 @@ class _SubscriptionPayWallPageState extends State<SubscriptionPayWallPage> {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             leading: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop("yes");
-                },
+                onPressed: widget.showAppBar
+                    ? () {
+                        Navigator.of(context).pop("yes");
+                      }
+                    : null,
                 icon: const Icon(CupertinoIcons.back)),
             backgroundColor: AppColors.backgroundColor,
             scrolledUnderElevation: 0,

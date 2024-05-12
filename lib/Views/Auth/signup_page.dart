@@ -91,6 +91,8 @@ class _SignUpPageState extends State<SignUpPage> {
         await AppSharefPrefHelper.setUserTocker(response.data["token"]);
         await AppSharefPrefHelper.saveUser(currentUser);
         currentUser = await AppSharefPrefHelper.getUser();
+        CommonData.userName = currentUser.name;
+        CommonData.userEmail = currentUser.email;
         if (mounted) {
           if (Platform.isAndroid) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(

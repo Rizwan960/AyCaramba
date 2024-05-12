@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
@@ -48,7 +49,7 @@ class CommonData {
 
   static Future<Dio> createDioWithAuthHeader() async {
     String token = await AppSharefPrefHelper.getUserToken();
-
+    log(token);
     Dio dio = Dio();
     dio.options.headers = {
       'Accept': 'application/json',

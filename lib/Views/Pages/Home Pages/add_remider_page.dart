@@ -105,13 +105,13 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
   List<String> _getOptionsBasedOnDate(DateTime selectedDate) {
     List<String> dayNames = [
-      'Sunday',
       'Monday',
       'Tuesday',
       'Wednesday',
       'Thursday',
       'Friday',
-      'Saturday'
+      'Saturday',
+      'Sunday',
     ];
     int weekdayIndex = selectedDate.weekday - 1;
     if (weekdayIndex < 0 || weekdayIndex >= dayNames.length) {
@@ -277,6 +277,8 @@ class _AddReminderPageState extends State<AddReminderPage> {
     }
     key.currentState!.save();
     log(selectedDays.toString());
+    selectedDates.add(
+        "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}");
     widget.parkingReminders == null
         ? AddReminderController().addNewReminder(
             carNameController.text,

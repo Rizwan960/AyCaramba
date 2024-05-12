@@ -34,9 +34,9 @@ class _ProfilePageState extends State<ProfilePage> {
         .changeApiHittingBehaviourToTrue();
 
     try {
-      Dio dio = await CommonData.createDioWithAuthHeader();
-      Response response = await dio.get(AppApi.logoutUrl);
+      Dio dio = await CommonData.createDioWithAuthHeaderForFcm();
       Response response1 = await dio.delete(AppApi.addUpdateRemoveFcmToken);
+      Response response = await dio.get(AppApi.logoutUrl);
       if (response.statusCode == 200 && response1.statusCode == 200) {
         log(response1.data.toString());
         SharedPreferences pref = await SharedPreferences.getInstance();
@@ -122,8 +122,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 10),
               EmailNameTileWidget(
-                name: user.name,
-                email: user.email,
+                name: CommonData.userName,
+                email: CommonData.userEmail,
                 fun: () {
                   if (Platform.isAndroid) {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -159,38 +159,44 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 10),
               const NotificationTogleTileWidget(title: "Mute Notifications"),
-              const SizedBox(height: 10),
-              SingleTitleTileWidget(
-                title: "Get Premium Now",
-                fun: () {
-                  if (Platform.isAndroid) {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(
-                          builder: (context) => const SubscriptionPayWallPage(
-                            showAppBar: true,
-                          ),
-                        ))
-                        .then((value) => {
-                              if (value == "yes") {setState(() {})}
-                            });
-                  } else {
-                    Navigator.of(context)
-                        .push(CupertinoPageRoute(
-                          builder: (context) => const SubscriptionPayWallPage(
-                            showAppBar: true,
-                          ),
-                        ))
-                        .then((value) => {
-                              if (value == "yes") {setState(() {})}
-                            });
-                  }
-                },
-              ),
+              if (user.subscription == null || user.isValidOffer == 0) ...[
+                const SizedBox(height: 10),
+                SingleTitleTileWidget(
+                  title: "Get Premium Now",
+                  fun: () {
+                    if (Platform.isAndroid) {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(
+                        builder: (context) => const SubscriptionPayWallPage(
+                          showAppBar: true,
+                        ),
+                      ))
+                          .then((value) {
+                        log(user.toString());
+
+                        setState(() {});
+                      });
+                    } else {
+                      Navigator.of(context)
+                          .push(CupertinoPageRoute(
+                        builder: (context) => const SubscriptionPayWallPage(
+                          showAppBar: true,
+                        ),
+                      ))
+                          .then((value) {
+                        log(user.subscription!.plan.toString());
+                        setState(() {});
+                      });
+                    }
+                  },
+                ),
+              ],
               const SizedBox(height: 10),
               SingleTitleTileWidget(
                 title: "Privacy Policy ",
                 fun: () async {
-                  final Uri url = Uri.parse("https://www.google.com");
+                  final Uri url = Uri.parse(
+                      "https://mystreetsweeper.com/privacy-and-policy");
                   if (!await launchUrl(url)) {
                     throw Exception('Could not launch $url');
                   }
@@ -200,7 +206,8 @@ class _ProfilePageState extends State<ProfilePage> {
               SingleTitleTileWidget(
                 title: "Terms & Conditions",
                 fun: () async {
-                  final Uri url = Uri.parse("https://www.google.com");
+                  final Uri url = Uri.parse(
+                      "https://mystreetsweeper.com/terms-and-conditions");
                   if (!await launchUrl(url)) {
                     throw Exception('Could not launch $url');
                   }

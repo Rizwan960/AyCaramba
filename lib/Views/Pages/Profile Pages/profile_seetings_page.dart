@@ -384,7 +384,7 @@ class _ProfileSeetingsPageState extends State<ProfileSeetingsPage> {
                       const SizedBox(height: 10),
                       PersonalDetailTileWidget(
                         showLock: false,
-                        title: user.name,
+                        title: CommonData.userName,
                         icon: const Icon(
                           CupertinoIcons.person_alt_circle,
                           color: AppColors.yellowTextColor,
@@ -393,7 +393,7 @@ class _ProfileSeetingsPageState extends State<ProfileSeetingsPage> {
                       const SizedBox(height: 10),
                       PersonalDetailTileWidget(
                         showLock: false,
-                        title: user.email,
+                        title: CommonData.userEmail,
                         icon: const Icon(
                           CupertinoIcons.mail_solid,
                           color: AppColors.yellowTextColor,
