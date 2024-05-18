@@ -39,7 +39,31 @@ class AddReminderController {
         "ticket_fees": ticketFees,
         "days": {
           "is_weekly": isWeekly == false ? "" : reminderDays,
-          "is_monthly": isMonthly == false ? "" : reminderDays,
+          "is_first_week": isMonthly == false
+              ? ""
+              : reminderDays.first.contains("1")
+                  ? reminderDays
+                  : "",
+          "is_second_week": isMonthly == false
+              ? ""
+              : reminderDays.first.contains("2")
+                  ? reminderDays
+                  : "",
+          "is_third_week": isMonthly == false
+              ? ""
+              : reminderDays.first.contains("3")
+                  ? reminderDays
+                  : "",
+          "is_fourth_week": isMonthly == false
+              ? ""
+              : reminderDays.first.contains("4")
+                  ? reminderDays
+                  : "",
+          "is_fifth_week": isMonthly == false
+              ? ""
+              : reminderDays.first.contains("5")
+                  ? reminderDays
+                  : "",
           "is_custom": isCustome == false ? "" : reminderDays,
         },
         "time": reminderTime,

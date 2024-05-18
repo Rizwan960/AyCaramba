@@ -22,42 +22,30 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
-
   bool _imageVisible = true;
+  bool _svgVisible = false;
 
   @override
   void initState() {
     super.initState();
-    _initializeAnimation();
-    _startAnimation();
+    _startAnimations();
   }
 
-  void _initializeAnimation() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
-    _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeOut,
-      ),
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          setState(() {
-            _imageVisible = false;
-          });
-        }
-      });
-  }
-
-  void _startAnimation() {
-    _animationController.forward();
-    // Delay for 3 seconds to display the image
+  void _startAnimations() {
     Timer(const Duration(seconds: 3), () {
-      _navigate();
+      setState(() {
+        _imageVisible = false;
+      });
+
+      Timer(const Duration(milliseconds: 500), () {
+        setState(() {
+          _svgVisible = true;
+        });
+
+        Timer(const Duration(seconds: 3), () {
+          _navigate();
+        });
+      });
     });
   }
 
@@ -120,9 +108,9 @@ class _SplashScreenState extends State<SplashScreen>
       backgroundColor: AppColors.callToActionColor,
       body: Stack(
         children: [
-          // Your full screen image with fade-out animation
+          // Full screen image with fade-out animation
           AnimatedOpacity(
-            opacity: _imageVisible ? _fadeAnimation.value : 0,
+            opacity: _imageVisible ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 500),
             child: Center(
               child: ClipRRect(
@@ -136,28 +124,20 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
           ),
-          // Your branding elements (SVG)
+          // Branding elements (SVG) with fade-in animation
           AnimatedOpacity(
-            opacity: _imageVisible ? 0 : 1,
+            opacity: _svgVisible ? 1.0 : 0.0,
             duration: const Duration(milliseconds: 500),
-            child: Positioned.fill(
-              child: Center(
-                child: SvgPicture.asset(
-                  "Assets/Svg/logo.svg",
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  height: MediaQuery.of(context).size.height * 0.2,
-                ),
+            child: Center(
+              child: SvgPicture.asset(
+                "Assets/Svg/logo.svg",
+                width: MediaQuery.of(context).size.width * 0.2,
+                height: MediaQuery.of(context).size.height * 0.2,
               ),
             ),
           ),
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
   }
 }

@@ -104,7 +104,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
   }
 
   List<String> _getOptionsBasedOnDate(DateTime selectedDate) {
-    List<String> dayNames = [
+    final List<String> dayNames = [
       'Monday',
       'Tuesday',
       'Wednesday',
@@ -114,20 +114,18 @@ class _AddReminderPageState extends State<AddReminderPage> {
       'Sunday',
     ];
     int weekdayIndex = selectedDate.weekday - 1;
-    if (weekdayIndex < 0 || weekdayIndex >= dayNames.length) {
-      // Handle out-of-range weekdayIndex here
-      return [];
-    }
+    if (weekdayIndex < 0 || weekdayIndex >= dayNames.length) return [];
 
-    String dayOfWeek = dayNames[weekdayIndex];
-    dayOfWeeek = dayOfWeek;
+    dayOfWeek = dayNames[weekdayIndex];
+    int weekOfMonth = _getWeekOfMonth(selectedDate);
     List<String> options = List<String>.from(_dayOptions);
     options[1] += dayOfWeek;
-    options[2] += 'first $dayOfWeek';
+    options[2] += '$weekOfMonth $dayOfWeek';
 
     return options;
   }
 
+  String dayOfWeek = "";
   @override
   void initState() {
     super.initState();
@@ -312,6 +310,12 @@ class _AddReminderPageState extends State<AddReminderPage> {
             widget.parkingReminders!.id.toString(),
             true,
           );
+  }
+
+  int _getWeekOfMonth(DateTime date) {
+    final firstDayOfMonth = DateTime(date.year, date.month, 1);
+    final weekDay = firstDayOfMonth.weekday;
+    return ((date.day + weekDay - 2) ~/ 7) + 1;
   }
 
   @override
@@ -540,10 +544,12 @@ class _AddReminderPageState extends State<AddReminderPage> {
                                           isWeekly = true;
                                           isMonthly = false;
                                         });
-                                      } else if (value.toString().contains(
-                                          "Monthly on the first $dayOfWeeek")) {
+                                      } else if (value
+                                          .toString()
+                                          .contains("Monthly on the")) {
                                         selectedDays.clear();
-                                        selectedDays = [dayOfWeeek];
+                                        selectedDays = [value.toString()];
+                                        log(selectedDays.toString());
                                         setState(() {
                                           isMonthly = true;
                                           isWeekly = false;
