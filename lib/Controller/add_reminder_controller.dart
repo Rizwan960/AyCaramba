@@ -30,6 +30,8 @@ class AddReminderController {
         .changeApiHittingBehaviourToTrue();
     try {
       Dio dio = await CommonData.createDioWithAuthHeader();
+      log(isMonthly.toString());
+
       Map<String, dynamic> data = {
         "car_name": carName,
         "car_model": carModel,
@@ -42,27 +44,27 @@ class AddReminderController {
           "is_first_week": isMonthly == false
               ? ""
               : reminderDays.first.contains("1")
-                  ? reminderDays
+                  ? [reminderDays.first.split("Monthly on the 1 ").last]
                   : "",
           "is_second_week": isMonthly == false
               ? ""
               : reminderDays.first.contains("2")
-                  ? reminderDays
+                  ? [reminderDays.first.split("Monthly on the 2 ").last]
                   : "",
           "is_third_week": isMonthly == false
               ? ""
               : reminderDays.first.contains("3")
-                  ? reminderDays
+                  ? [reminderDays.first.split("Monthly on the 3 ").last]
                   : "",
           "is_fourth_week": isMonthly == false
               ? ""
               : reminderDays.first.contains("4")
-                  ? reminderDays
+                  ? [reminderDays.first.split("Monthly on the 4 ").last]
                   : "",
           "is_fifth_week": isMonthly == false
               ? ""
               : reminderDays.first.contains("5")
-                  ? reminderDays
+                  ? [reminderDays.first.split("Monthly on the 5 ").last]
                   : "",
           "is_custom": isCustome == false ? "" : reminderDays,
         },
@@ -84,7 +86,12 @@ class AddReminderController {
         Provider.of<LoadingManagemet>(context, listen: false)
             .changeApiHittingBehaviourToFalse();
         await GetAllReminders().addNewReminder(context, false);
-        CommonData.showCustomSnackbar(context, "Reminder Added Successfully");
+        if (updateFunction == true) {
+          CommonData.showCustomSnackbar(
+              context, "Reminder Updated Successfully");
+        } else {
+          CommonData.showCustomSnackbar(context, "Reminder Added Successfully");
+        }
         Navigator.of(context).pop();
       } else {
         if (context.mounted) {

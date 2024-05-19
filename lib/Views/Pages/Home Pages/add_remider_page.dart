@@ -55,7 +55,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
   final carFineFocusNode = FocusNode();
   final carParkLocationFocusNode = FocusNode();
   String dayOfWeeek = "";
-  bool isWeekly = false;
+  bool isWeekly = true;
   bool isMonthly = false;
   bool isCustom = false;
   String? selectedValue;
@@ -553,6 +553,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                                         setState(() {
                                           isMonthly = true;
                                           isWeekly = false;
+                                          isCustom = false;
                                         });
                                       } else if (value
                                           .toString()
@@ -568,6 +569,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                                         setState(() {
                                           isWeekly = true;
                                           isMonthly = false;
+                                          isCustom = false;
                                         });
                                       } else if (value.toString() == "Custom") {
                                         selectedDates.clear();

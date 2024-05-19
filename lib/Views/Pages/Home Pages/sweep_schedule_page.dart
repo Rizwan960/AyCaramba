@@ -96,6 +96,21 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
     }
   }
 
+  String convertTo12HourFormat(String time24) {
+    List<String> parts = time24.split(':');
+    int hour24 = int.parse(parts[0]);
+    int minute = int.parse(parts[1]);
+    String period = hour24 >= 12 ? 'PM' : 'AM';
+    int hour12 = hour24 % 12;
+    if (hour12 == 0) {
+      hour12 = 12;
+    }
+    String minuteStr = minute.toString().padLeft(2, '0');
+    String time12 = '$hour12:$minuteStr $period';
+
+    return time12;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LoadingManagemet>(
@@ -321,7 +336,9 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                                     .yellowTextColor),
                                                             const SizedBox(
                                                                 width: 10),
-                                                            Text(data.time)
+                                                            Text(
+                                                                convertTo12HourFormat(
+                                                                    data.time))
                                                           ],
                                                         ),
                                                         const SizedBox(

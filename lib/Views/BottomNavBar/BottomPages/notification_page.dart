@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ay_caramba/Model/notification_model.dart';
 import 'package:ay_caramba/Utils/Colors/app_colors.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
@@ -41,6 +43,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 itemCount: notifications.length,
                 itemBuilder: (context, index) {
                   final data = notifications[index];
+                  log(data.id.toString());
                   return Column(
                     children: [
                       ListTile(
