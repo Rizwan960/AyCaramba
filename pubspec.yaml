@@ -107,6 +107,7 @@ flutter:
     - Assets/Svg/forget_password.svg
     - Assets/Images/home_appbar.png
     - Assets/Images/tickets.jpeg
+    - Assets/Sounds/notify.mp3
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -9,10 +9,10 @@ class NotificationService {
       null,
       [
         NotificationChannel(
-          channelGroupKey: 'high_importance_channel',
-          channelKey: 'high_importance_channel',
-          channelName: 'Basic notifications',
-          channelDescription: 'Notification channel for basic tests',
+          channelGroupKey: 'high_importance_channel_group',
+          channelKey: 'high_importance_channel_ay_caramba',
+          channelName: 'Hi Importance notifications',
+          channelDescription: 'Notification channel for high importance tests',
           defaultColor: const Color(0xFF9D50DD),
           ledColor: Colors.white,
           importance: NotificationImportance.Max,
@@ -20,12 +20,13 @@ class NotificationService {
           onlyAlertOnce: true,
           playSound: true,
           criticalAlerts: true,
+          soundSource: 'resource://raw/notify',
         )
       ],
       channelGroups: [
         NotificationChannelGroup(
           channelGroupKey: 'high_importance_channel_group',
-          channelGroupName: 'Group 1',
+          channelGroupName: 'Group Ay Caramba',
         )
       ],
       debug: true,
@@ -92,7 +93,7 @@ class NotificationService {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: -1,
-        channelKey: 'high_importance_channel',
+        channelKey: 'high_importance_channel_ay_caramba',
         title: title,
         body: body,
         actionType: actionType,
