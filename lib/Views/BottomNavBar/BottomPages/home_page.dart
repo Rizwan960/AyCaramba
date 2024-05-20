@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 60),
                   GestureDetector(
                     onTap: () {
                       if (ParkingRemindersSingleton().tickets.isEmpty) {
@@ -359,7 +359,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Positioned(
-          top: 215,
+          top: 210,
           left: 0,
           right: 0,
           child: SizedBox(

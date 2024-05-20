@@ -1,6 +1,6 @@
-import 'dart:developer';
-
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:ay_caramba/Service/navigation.dart';
+import 'package:ay_caramba/Views/BottomNavBar/BottomPages/notification_page.dart';
 import 'package:flutter/material.dart';
 
 class NotificationService {
@@ -70,9 +70,16 @@ class NotificationService {
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
     debugPrint('onActionReceivedMethod');
-    final payload = receivedAction.toString();
-    // final notificationId = payload['notification_id'];
-    log('Notification ID: $payload');
+    final payload = receivedAction.payload;
+    if (payload != null && payload.containsKey('navigation')) {
+      final navigation = payload['navigation'];
+      if (navigation == 'notification_page') {
+        Navigator.of(NavigationService.navigatorKey.currentContext!)
+            .push(MaterialPageRoute(
+          builder: (context) => const NotificationPage(),
+        ));
+      }
+    }
   }
 
   static Future<void> showNotification({

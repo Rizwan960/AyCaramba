@@ -55,9 +55,10 @@ class ShareReferralCodePage extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () async {
-                  final subject = Uri.encodeComponent("Ay Caramba Refral Code");
+                  final subject =
+                      Uri.encodeComponent("Ay Caramba Referral Code");
                   final body = Uri.encodeComponent(
-                      "Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${CommonData.userCode} Spread the word and enjoy the perks! Best regards,");
+                      "Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${currentUser.code} Spread the word and enjoy the perks! Best regards,");
 
                   Uri mail = Uri.parse("mailto:?subject=$subject&body=$body");
                   if (await canLaunchUrl(mail)) {
@@ -89,7 +90,7 @@ class ShareReferralCodePage extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   var uri =
-                      "sms:?body=Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${CommonData.userCode} Spread the word and enjoy the perks! Best regards,";
+                      "sms:?body=Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${currentUser.code} Spread the word and enjoy the perks! Best regards,";
                   if (await canLaunch(uri)) {
                     await launch(uri);
                   } else {
@@ -119,7 +120,7 @@ class ShareReferralCodePage extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   await Share.share(
-                      "Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${CommonData.userCode} Spread the word and enjoy the perks! Best regards,");
+                      "Hey there, We're thrilled to share an exclusive referral code with you! Share the love and invite your friends to join us. Your unique code is:${currentUser.code} Spread the word and enjoy the perks! Best regards,");
                 },
                 child: Container(
                   height: 60,

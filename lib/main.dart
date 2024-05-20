@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:ay_caramba/Model/notification_model.dart';
 import 'package:ay_caramba/Model/reminders_model.dart';
+import 'package:ay_caramba/Service/navigation.dart';
 import 'package:ay_caramba/Service/notification_services.dart';
 import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
@@ -16,9 +20,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   if (message.notification != null) {
     // log(message.data["notification_id"]);
     NotificationService.showNotification(
-        title: message.notification!.title!,
-        body: message.notification!.body!,
-        actionButtons: actionButtons);
+      title: message.notification!.title!,
+      body: message.notification!.body!,
+      actionButtons: actionButtons,
+      payload: {'navigation': 'notification_page'},
+    );
   }
 
   await Firebase.initializeApp(
@@ -45,11 +51,14 @@ void main() async {
   FirebaseMessaging messagingg = FirebaseMessaging.instance;
   FirebaseMessaging.instance.getInitialMessage().then((value) {
     if (value?.notification != null) {
+      log(value!.toString());
       // log(value!.data["notification_id"]);
       NotificationService.showNotification(
-          title: value!.notification!.title!,
-          body: value.notification!.body!,
-          actionButtons: actionButtons);
+        title: value.notification!.title!,
+        body: value.notification!.body!,
+        actionButtons: actionButtons,
+        payload: {'navigation': 'notification_page'},
+      );
     }
   });
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -68,20 +77,27 @@ void main() async {
   );
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     if (message.notification != null) {
+      log(messagingg.toString());
+
       // log(message.data["notification_id"]);
       NotificationService.showNotification(
-          title: message.notification!.title!,
-          body: message.notification!.body!,
-          actionButtons: actionButtons);
+        title: message.notification!.title!,
+        body: message.notification!.body!,
+        actionButtons: actionButtons,
+        payload: {'navigation': 'notification_page'},
+      );
     }
   });
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.notification != null) {
+      log(messagingg.toString());
       // log(message.data["notification_id"]);
       NotificationService.showNotification(
-          title: message.notification!.title!,
-          body: message.notification!.body!,
-          actionButtons: actionButtons);
+        title: message.notification!.title!,
+        body: message.notification!.body!,
+        actionButtons: actionButtons,
+        payload: {'navigation': 'notification_page'},
+      );
     }
   });
 
@@ -103,9 +119,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider<ParkingRemindersSingleton>(
             create: (context) => ParkingRemindersSingleton(),
           ),
+          ChangeNotifierProvider<NotificationModell>(
+            create: (context) => NotificationModell(),
+          ),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          navigatorKey: NavigationService.navigatorKey,
           title: 'Ay Caramba',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

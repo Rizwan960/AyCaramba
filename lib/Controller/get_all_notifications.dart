@@ -19,7 +19,7 @@ class GetAllNotifications {
       if (response.statusCode == 200 && context.mounted) {
         Provider.of<LoadingManagemet>(context, listen: false)
             .changeApiHittingBehaviourToFalse();
-        NotificationModel().parseJson(response.data);
+        NotificationModell().parseJson(response.data);
       } else {
         if (context.mounted) {
           CommonData.sshowDialog("Error", response.data['message'], context);

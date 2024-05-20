@@ -1,11 +1,13 @@
-class NotificationModel {
-  static final NotificationModel _instance = NotificationModel._internal();
+import 'package:flutter/cupertino.dart';
 
-  factory NotificationModel() {
+class NotificationModell extends ChangeNotifier {
+  static final NotificationModell _instance = NotificationModell._internal();
+
+  factory NotificationModell() {
     return _instance;
   }
 
-  NotificationModel._internal();
+  NotificationModell._internal();
 
   List<NotificationItem> data = [];
 
@@ -13,6 +15,17 @@ class NotificationModel {
     final List<dynamic> notifications = jsonString['data'];
     data =
         notifications.map((json) => NotificationItem.fromJson(json)).toList();
+  }
+
+  void updateVerificationStatus(int id) {
+    for (var notification in data) {
+      if (notification.id == id) {
+        notification.isVerified = true;
+        notifyListeners();
+        break;
+      }
+    }
+    notifyListeners();
   }
 }
 
@@ -23,7 +36,7 @@ class NotificationItem {
   final String time;
   final String street;
   final int saveTicket;
-  final bool isVerified;
+  bool isVerified;
 
   NotificationItem({
     required this.id,
