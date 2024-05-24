@@ -118,9 +118,11 @@ class _AddReminderPageState extends State<AddReminderPage> {
 
     dayOfWeek = dayNames[weekdayIndex];
     int weekOfMonth = _getWeekOfMonth(selectedDate);
+    String weekOfMonthOrdinal = getOrdinal(weekOfMonth);
+
     List<String> options = List<String>.from(_dayOptions);
     options[1] += dayOfWeek;
-    options[2] += '$weekOfMonth $dayOfWeek';
+    options[2] += '$weekOfMonthOrdinal $dayOfWeek';
 
     return options;
   }
@@ -130,6 +132,27 @@ class _AddReminderPageState extends State<AddReminderPage> {
   void initState() {
     super.initState();
     updateRecordCheck();
+  }
+
+  String getOrdinal(int number) {
+    if (!(number >= 1 && number <= 31)) {
+      throw RangeError('Number must be between 1 and 31');
+    }
+
+    if (number >= 11 && number <= 13) {
+      return '${number}th';
+    }
+
+    switch (number % 10) {
+      case 1:
+        return '${number}st';
+      case 2:
+        return '${number}nd';
+      case 3:
+        return '${number}rd';
+      default:
+        return '${number}th';
+    }
   }
 
   Future<void> updateRecordCheck() async {
@@ -624,7 +647,7 @@ class _AddReminderPageState extends State<AddReminderPage> {
                               side: BorderSide(color: Colors.grey.shade600),
                               fillColor: rememberMe
                                   ? null
-                                  : MaterialStateProperty.all<Color>(
+                                  : WidgetStateProperty.all<Color>(
                                       Colors.white),
                               value: rememberMe,
                               onChanged: (value) {},

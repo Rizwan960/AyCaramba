@@ -9,6 +9,7 @@ import 'package:ay_caramba/Utils/Common/common_data.dart';
 import 'package:ay_caramba/Utils/Fonts/app_fonts.dart';
 import 'package:ay_caramba/Utils/Provider/loading_management.dart';
 import 'package:ay_caramba/Views/Pages/Home%20Pages/add_remider_page.dart';
+import 'package:ay_caramba/Widgets/Home%20Widgets/reminder_detail_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -295,9 +296,30 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                       BorderRadius.circular(
                                                           15)),
                                               child: ListTile(
-                                                title: Text(
-                                                  data.carName,
-                                                  style: AppFonts.normalBlack18,
+                                                title: Row(
+                                                  children: [
+                                                    Text(
+                                                      data.carName,
+                                                      style: AppFonts
+                                                          .normalBlack18,
+                                                    ),
+                                                    IconButton(
+                                                      onPressed: () {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return ReminderDetailDialog(
+                                                              data: data,
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                      icon: const Icon(
+                                                        Icons.info_outline,
+                                                        size: 20,
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
                                                 subtitle: Column(
                                                   children: [
@@ -315,12 +337,18 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                         ),
                                                         const SizedBox(
                                                             width: 10),
-                                                        Text(
-                                                          data.street,
-                                                          style: const TextStyle(
+                                                        Expanded(
+                                                          child: Text(
+                                                            data.street,
+                                                            style:
+                                                                const TextStyle(
                                                               color: Color(
                                                                   0XFF455A64),
-                                                              fontSize: 13),
+                                                              fontSize: 13,
+                                                            ),
+                                                            overflow: TextOverflow
+                                                                .ellipsis, // Add this to handle long text
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -330,42 +358,52 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                                                         Row(
                                                           children: [
                                                             const Icon(
-                                                                CupertinoIcons
-                                                                    .time,
-                                                                size: 15,
-                                                                color: AppColors
-                                                                    .yellowTextColor),
+                                                              CupertinoIcons
+                                                                  .time,
+                                                              size: 15,
+                                                              color: AppColors
+                                                                  .yellowTextColor,
+                                                            ),
                                                             const SizedBox(
                                                                 width: 10),
                                                             Text(
                                                                 convertTo12HourFormat(
-                                                                    data.time))
+                                                                    data.time)),
                                                           ],
                                                         ),
                                                         const SizedBox(
                                                             width: 10),
-                                                        Row(
-                                                          children: [
-                                                            const Icon(
+                                                        Expanded(
+                                                          child: Row(
+                                                            children: [
+                                                              const Icon(
                                                                 CupertinoIcons
                                                                     .bell,
                                                                 size: 15,
                                                                 color: AppColors
-                                                                    .yellowTextColor),
-                                                            const SizedBox(
-                                                                width: 5),
-                                                            Text(
-                                                                "${convertToHours(data.reminderTime)} before")
-                                                          ],
-                                                        )
+                                                                    .yellowTextColor,
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 5),
+                                                              Flexible(
+                                                                child: Text(
+                                                                  "${convertToHours(data.reminderTime)} before",
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis, // Add this to handle long text
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
                                                       ],
-                                                    )
+                                                    ),
                                                   ],
                                                 ),
                                                 trailing: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          bottom: 10),
+                                                          bottom: 5),
                                                   child: Container(
                                                     height: 50,
                                                     width: 40,

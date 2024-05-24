@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:ay_caramba/Model/reminders_model.dart';
@@ -21,6 +22,7 @@ class GetAllReminders {
         AppApi.getAllRemindersUrl,
       );
       if (response.statusCode == 200 && context.mounted) {
+        log(response.data.toString());
         Provider.of<LoadingManagemet>(context, listen: false)
             .changeApiHittingBehaviourToFalse();
         ParkingRemindersSingleton().tickets.clear();

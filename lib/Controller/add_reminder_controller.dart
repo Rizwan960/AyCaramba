@@ -43,28 +43,28 @@ class AddReminderController {
           "is_weekly": isWeekly == false ? "" : reminderDays,
           "is_first_week": isMonthly == false
               ? ""
-              : reminderDays.first.contains("1")
-                  ? [reminderDays.first.split("Monthly on the 1 ").last]
+              : reminderDays.first.contains("1st")
+                  ? [reminderDays.first.split("Monthly on the 1st ").last]
                   : "",
           "is_second_week": isMonthly == false
               ? ""
-              : reminderDays.first.contains("2")
-                  ? [reminderDays.first.split("Monthly on the 2 ").last]
+              : reminderDays.first.contains("2nd")
+                  ? [reminderDays.first.split("Monthly on the 2nd ").last]
                   : "",
           "is_third_week": isMonthly == false
               ? ""
-              : reminderDays.first.contains("3")
-                  ? [reminderDays.first.split("Monthly on the 3 ").last]
+              : reminderDays.first.contains("3rd")
+                  ? [reminderDays.first.split("Monthly on the 3rd ").last]
                   : "",
           "is_fourth_week": isMonthly == false
               ? ""
-              : reminderDays.first.contains("4")
-                  ? [reminderDays.first.split("Monthly on the 4 ").last]
+              : reminderDays.first.contains("4th")
+                  ? [reminderDays.first.split("Monthly on the 4th ").last]
                   : "",
           "is_fifth_week": isMonthly == false
               ? ""
-              : reminderDays.first.contains("5")
-                  ? [reminderDays.first.split("Monthly on the 5 ").last]
+              : reminderDays.first.contains("5th")
+                  ? [reminderDays.first.split("Monthly on the 5th ").last]
                   : "",
           "is_custom": isCustome == false ? "" : reminderDays,
         },

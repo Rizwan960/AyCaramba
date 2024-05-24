@@ -12,7 +12,6 @@ import 'package:ay_caramba/Views/Pages/Profile%20Pages/profile_seetings_page.dar
 import 'package:ay_caramba/Views/Pages/Profile%20Pages/referral_page.dart';
 import 'package:ay_caramba/Views/Pages/Profile%20Pages/subscription_paywall_page.dart';
 import 'package:ay_caramba/Widgets/Profile%20Widgets/email_name_tile_widget.dart';
-import 'package:ay_caramba/Widgets/Profile%20Widgets/notification_togle_tile_widget.dart';
 import 'package:ay_caramba/Widgets/Profile%20Widgets/single_title_tile_widget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -157,8 +156,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 style:
                     TextStyle(color: AppColors.yellowTextColor, fontSize: 30),
               ),
-              const SizedBox(height: 10),
-              const NotificationTogleTileWidget(title: "Mute Notifications"),
+              // const SizedBox(height: 10),
+              // const NotificationTogleTileWidget(title: "Mute Notifications"),
               if (user.subscription == null || user.isValidOffer == 0) ...[
                 const SizedBox(height: 10),
                 SingleTitleTileWidget(

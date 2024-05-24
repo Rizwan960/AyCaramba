@@ -34,6 +34,25 @@ class ParkingReminders {
   });
 
   factory ParkingReminders.fromJson(Map<String, dynamic> json) {
+    List<String>? extractDays(Map<String, dynamic> json) {
+      if (json['days']['is_weekly'] != null) {
+        return List<String>.from(json['days']['is_weekly']);
+      } else if (json['days']['is_first_week'] != null) {
+        return List<String>.from(json['days']['is_first_week']);
+      } else if (json['days']['is_second_week'] != null) {
+        return List<String>.from(json['days']['is_second_week']);
+      } else if (json['days']['is_third_week'] != null) {
+        return List<String>.from(json['days']['is_third_week']);
+      } else if (json['days']['is_fourth_week'] != null) {
+        return List<String>.from(json['days']['is_fourth_week']);
+      } else if (json['days']['is_fifth_week'] != null) {
+        return List<String>.from(json['days']['is_fifth_week']);
+      } else if (json['days']['is_custom'] != null) {
+        return List<String>.from(json['days']['is_custom']);
+      }
+      return null;
+    }
+
     return ParkingReminders(
       id: json['id'],
       userId: json['user_id'],
@@ -43,7 +62,7 @@ class ParkingReminders {
       color: json['color'],
       street: json['street'],
       ticketFees: json['ticket_fees'],
-      // days: List<String>.from(json['days']),
+      days: extractDays(json),
       isRepeat: json['is_repeat'] == 1,
       time: json['time'],
       reminderTime: json['reminder_time'],
