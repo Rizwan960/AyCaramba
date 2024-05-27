@@ -175,7 +175,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                     ),
                                     const SizedBox(width: 10),
                                     Text(
-                                      "Ticket \$${data.saveTicket}",
+                                      "Ticket ${data.saveTicket}",
                                       style: AppFonts.normalBlack12,
                                     ),
                                   ],
@@ -185,6 +185,8 @@ class _NotificationPageState extends State<NotificationPage> {
                           ],
                         ),
                       ),
+                      if (index == notifications.length - 1)
+                        const SizedBox(height: 90),
                       const SizedBox(height: 10),
                     ],
                   );

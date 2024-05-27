@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class SweepSchedulePage extends StatefulWidget {
   const SweepSchedulePage({super.key});
@@ -124,65 +123,72 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                 Scaffold(
                   backgroundColor: AppColors.backgroundColor,
                   appBar: AppBar(
-                    scrolledUnderElevation: 0,
-                    toolbarHeight: 320,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(40),
-                            bottomRight: Radius.circular(40))),
-                    automaticallyImplyLeading: false,
                     backgroundColor: AppColors.callToActionColor,
-                    flexibleSpace: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            const SizedBox(height: 40),
-                            const Text("Sweep Schedule",
-                                style: AppFonts.normalWhite21),
-                            const SizedBox(height: 10),
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.backgroundColor,
-                                    borderRadius: BorderRadius.circular(30)),
-                                height: 250,
-                                child: TableCalendar(
-                                  onDaySelected: (selectedDay, focusedDay) {
-                                    log(selectedDay.toString());
-                                  },
-                                  calendarStyle: const CalendarStyle(
-                                      todayDecoration: BoxDecoration(
-                                    color: AppColors.callToActionColor,
-                                    shape: BoxShape.circle,
-                                  )),
-                                  headerStyle: const HeaderStyle(
-                                    formatButtonVisible: false,
-                                  ),
-                                  rowHeight: 30,
-                                  focusedDay: DateTime.now(),
-                                  firstDay: DateTime.utc(2010, 10, 16),
-                                  lastDay: DateTime.utc(2030, 3, 14),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Positioned(
-                          top: 30,
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            icon: const Icon(
-                              CupertinoIcons.back,
-                              color: Colors.black,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
+                    title: const Text("Sweep Schedule",
+                        style: AppFonts.normalWhite21),
+                    centerTitle: true,
                   ),
+                  // appBar: AppBar(
+                  //   scrolledUnderElevation: 0,
+                  //   toolbarHeight: 320,
+                  //   shape: const RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.only(
+                  //           bottomLeft: Radius.circular(40),
+                  //           bottomRight: Radius.circular(40))),
+                  //   automaticallyImplyLeading: false,
+                  //   backgroundColor: AppColors.callToActionColor,
+                  //   flexibleSpace: Stack(
+                  //     children: [
+                  //       Column(
+                  //         children: [
+                  //           const SizedBox(height: 40),
+                  //           const Text("Sweep Schedule",
+                  //               style: AppFonts.normalWhite21),
+                  //           const SizedBox(height: 10),
+                  //           Padding(
+                  //             padding: const EdgeInsets.all(10),
+                  //             child: Container(
+                  //               decoration: BoxDecoration(
+                  //                   color: AppColors.backgroundColor,
+                  //                   borderRadius: BorderRadius.circular(30)),
+                  //               height: 250,
+                  //               child: TableCalendar(
+                  //                 onDaySelected: (selectedDay, focusedDay) {
+                  //                   log(selectedDay.toString());
+                  //                 },
+                  //                 calendarStyle: const CalendarStyle(
+                  //                     todayDecoration: BoxDecoration(
+                  //                   color: AppColors.callToActionColor,
+                  //                   shape: BoxShape.circle,
+                  //                 )),
+                  //                 headerStyle: const HeaderStyle(
+                  //                   formatButtonVisible: false,
+                  //                 ),
+                  //                 rowHeight: 30,
+                  //                 focusedDay: DateTime.now(),
+                  //                 firstDay: DateTime.utc(2010, 10, 16),
+                  //                 lastDay: DateTime.utc(2030, 3, 14),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       Positioned(
+                  //         top: 30,
+                  //         child: IconButton(
+                  //           onPressed: () {
+                  //             Navigator.of(context).pop();
+                  //           },
+                  //           icon: const Icon(
+                  //             CupertinoIcons.back,
+                  //             color: Colors.black,
+                  //           ),
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+
                   body: SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -226,7 +232,7 @@ class _SweepSchedulePageState extends State<SweepSchedulePage> {
                           ),
                           const SizedBox(height: 10),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.46,
+                            height: MediaQuery.of(context).size.height * 0.75,
                             child: value.tickets.isEmpty
                                 ? const Center(
                                     child: Text("No reminders added yet"),

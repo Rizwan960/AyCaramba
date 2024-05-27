@@ -57,7 +57,7 @@ class _HistoryPageState extends State<HistoryPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 60),
             child: Text(
-              "Through our proactive efforts, we've not only saved you from the hassle of tickets but also put money back in your pocket by avoiding fines which is equal to $money as per your ticket fees.",
+              "Based on the information that you have provided, Ay Caramba has helped you to save $money so far! Congratulations!",
               style: AppFonts.normalBlack15,
               textAlign: TextAlign.center,
             ),

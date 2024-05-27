@@ -9,19 +9,25 @@ class NotificationService {
       null,
       [
         NotificationChannel(
-          channelGroupKey: 'high_importance_channel_group',
-          channelKey: 'high_importance_channel_ay_caramba',
-          channelName: 'Hi Importance notifications',
-          channelDescription: 'Notification channel for high importance tests',
-          defaultColor: const Color(0xFF9D50DD),
-          ledColor: Colors.white,
-          importance: NotificationImportance.Max,
-          channelShowBadge: true,
-          onlyAlertOnce: true,
-          playSound: true,
-          criticalAlerts: true,
-          soundSource: 'resource://raw/notify',
-        )
+            channelGroupKey: 'high_importance_channel_group',
+            channelKey: 'high_importance_channel_ay_caramba',
+            channelName: 'Hi Importance notifications',
+            channelDescription:
+                'Notification channel for high importance tests',
+            defaultColor: const Color(0xFF9D50DD),
+            ledColor: Colors.white,
+            importance: NotificationImportance.Max,
+            channelShowBadge: true,
+            onlyAlertOnce: true,
+            playSound: true,
+            criticalAlerts: true,
+            soundSource:
+                // Platform.isAndroid
+                // ?
+                'resource://raw/notify'
+            //     :
+            // 'resource://notify.wav',
+            )
       ],
       channelGroups: [
         NotificationChannelGroup(
